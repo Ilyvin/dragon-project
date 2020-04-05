@@ -1,0 +1,46 @@
+
+\.idea/\.idea\.Crimsonland/\.idea/
+
+*.iml
+
+*.csproj
+
+Library/
+
+obj/
+
+*.sln
+
+*.user
+
+\.idea/
+
+Temp/
+
+Assets/Gizmos/Cinemachine/cm_logo_lg\.png
+
+Assets/Gizmos/Cinemachine/cm_logo_lg\.png\.meta
+
+Assets/Gizmos/Cinemachine\.meta
+
+Assets/Gizmos\.meta
+
+\.vscode/
+
+builds/
+
+# Unity3D generated meta files
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Unity3D generated file on crash reports
+sysinfo.txt
+
+# Builds
+*.apk
+*.unitypackage
+
+# Crashlytics generated file
+crashlytics-build.properties
+
