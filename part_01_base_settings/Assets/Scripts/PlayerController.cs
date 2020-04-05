@@ -18,7 +18,24 @@ public class PlayerController : MonoBehaviour
     public PlayerAmmoController ammoController;
     public PlayerExperienceController expaController;
     public PlayerStats playerStats;
+    public MainMenu mainMenu;
 
+    public void savePlayer()
+    {
+        SaveSystem.savePlayer(this);
+    }
+    
+    public void loadPlayer()
+    {
+        PlayerData data = SaveSystem.loadPlayer();
+
+        Vector3 position = new Vector3(data.position[0], data.position[1], data.position[2]);
+        transform.position = position;
+        healthController.currentHealth = data.currentHealth;
+        ammoController.currentAmmo = data.currentAmmo;
+        expaController.currentExpa = data.currentExpa;
+    }
+    
     void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -29,36 +46,51 @@ public class PlayerController : MonoBehaviour
         ammoController = gameObject.GetComponent<PlayerAmmoController>();
         expaController = gameObject.GetComponent<PlayerExperienceController>();
         playerStats = gameObject.GetComponent<PlayerStats>();
+        mainMenu = GameObject.FindGameObjectWithTag("MainMenuCanvas").GetComponent<MainMenu>();
         respawnPlayer();
     }
 
     void Update()
     {
-        moveInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-        moveVelocity = moveInput * speed;
-
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-        float rayLength;
-
-        if (groundPlane.Raycast(ray, out rayLength))
+        if (!mainMenu.isGamePaused())
         {
-            Vector3 pointToLook = ray.GetPoint(rayLength);
-            //Debug.Log("pointToLook" + pointToLook);
-            //Debug.DrawLine(ray.origin, pointToLook, Color.red);
-            transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
-        }
+            moveInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+            moveVelocity = moveInput * speed;
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            gunController.startShooting(true);
-        }
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+            Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+            float rayLength;
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            gunController.startShooting(false);
-        }
+            if (groundPlane.Raycast(ray, out rayLength))
+            {
+                Vector3 pointToLook = ray.GetPoint(rayLength);
+                //Debug.Log("pointToLook" + pointToLook);
+                //Debug.DrawLine(ray.origin, pointToLook, Color.red);
+                transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+            }
 
+            if (Input.GetMouseButtonDown(0))
+            {
+                gunController.startShooting(true);
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                gunController.startShooting(false);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                Debug.Log("Player is Saved");
+                savePlayer();
+            }
+
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                Debug.Log("Player is Loaded");
+                loadPlayer();
+            }
+        }
 
         /*if (Input.GetMouseButtonUp(0)) {
             // Получаем направление луча

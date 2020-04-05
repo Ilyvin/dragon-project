@@ -33,7 +33,11 @@ public class GunController : MonoBehaviour
         }
         else
         {
-            StopCoroutine(shootBulletCoroutine);
+            if (shootBulletCoroutine != null)
+            {
+                StopCoroutine(shootBulletCoroutine);
+            }
+
             shootingProcessStarted = false;
         }
     }

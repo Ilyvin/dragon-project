@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - MedicineItem
   - Weapon
+  - MainMenuCanvas
   layers:
   - Default
   - TransparentFX
