@@ -6,7 +6,7 @@ public class AmmoItemController : MonoBehaviour
 {
     public int hillValue = 25;
 
-    void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         Debug.Log("AmmoItem");
         if (other.gameObject.tag == "Player")

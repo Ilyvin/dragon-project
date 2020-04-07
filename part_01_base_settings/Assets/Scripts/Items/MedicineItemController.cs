@@ -6,7 +6,7 @@ public class MedicineItemController : MonoBehaviour
 {
     public float hillValue = 25f;
 
-    void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         Debug.Log("MedicineItem");
         if (other.gameObject.tag == "Player")
