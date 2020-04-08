@@ -60,7 +60,18 @@ public class PlayerController : MonoBehaviour
             characterController.SimpleMove(moveVelocity);
             
             rotatePlayerToMousePosition();
-            playerAttackControls();
+            //playerAttackControls();
+            
+            if (Input.GetMouseButtonDown(0))
+            {
+                gunController.startShooting(true);
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                gunController.startShooting(false);
+            }
+            
             savingSystemControls();
         }
     }

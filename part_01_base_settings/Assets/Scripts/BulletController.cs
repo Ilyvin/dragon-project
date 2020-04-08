@@ -30,8 +30,15 @@ public class BulletController : MonoBehaviour
         this.damage = damage;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Bullet met trigger: " + other );
+    }
+
     void OnCollisionEnter(Collision other)
     {
+        Debug.Log("Bullet met collision: " + other );
+        
         if (other.gameObject.tag == "Enemy")
         {
             //Debug.Log("Enemy got damage = " + damage);

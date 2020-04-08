@@ -5,7 +5,18 @@ using UnityEngine;
 public class MedicineItemController : MonoBehaviour
 {
     public float hillValue = 25f;
+    public float respawnDelay = 5f;
 
+    private void hideItemObject()
+    {
+        gameObject.SetActive(false);
+    }
+    
+    private void showItemObject()
+    {
+        gameObject.SetActive(true);
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("MedicineItem");
@@ -14,7 +25,11 @@ public class MedicineItemController : MonoBehaviour
             Debug.Log("Player was hilled by: " + hillValue + " hp");
             other.gameObject.GetComponent<PlayerHealthController>().changeHealth(hillValue);
 
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            
+            hideItemObject();
+            
+            Invoke("showItemObject", respawnDelay);
         }
     }
 }
