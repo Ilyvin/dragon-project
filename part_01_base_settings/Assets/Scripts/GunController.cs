@@ -15,9 +15,14 @@ public class GunController : MonoBehaviour
     public float damage = 25f;
     private IEnumerator shootBulletCoroutine;
 
+    public AudioClip shotSound;
+    private AudioSource audioSource;
+    
     private void Start()
     {
         playerController = gameObject.GetComponentInParent<PlayerController>();
+        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = shotSound;
     }
 
     public void startShooting(bool fire)
@@ -46,6 +51,7 @@ public class GunController : MonoBehaviour
     {
         while (playerController.ammoController.currentAmmo > 0)
         {
+            audioSource.Play();
             BulletController newBullet =
                 Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             newBullet.speed = bulletSpeed;

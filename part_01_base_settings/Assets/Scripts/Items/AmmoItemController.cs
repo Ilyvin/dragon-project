@@ -6,15 +6,24 @@ public class AmmoItemController : MonoBehaviour
 {
     public int hillValue = 25;
     public float respawnDelay = 5f;
-    
+    private AudioSource audioSource;
+    public GameObject childModel;
+
+    private void Start()
+    {
+        audioSource = gameObject.GetComponent<AudioSource>();
+    }
+
     private void hideItemObject()
     {
-        gameObject.SetActive(false);
+        childModel.SetActive(false);
+        gameObject.GetComponent<BoxCollider>().enabled = false;
     }
     
     private void showItemObject()
     {
-        gameObject.SetActive(true);
+        childModel.SetActive(true);
+        gameObject.GetComponent<BoxCollider>().enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,12 +31,13 @@ public class AmmoItemController : MonoBehaviour
         Debug.Log("AmmoItem");
         if (other.gameObject.tag == "Player")
         {
+            audioSource.Play();
             Debug.Log("Player's ammo was extended: " + hillValue + " items");
             other.gameObject.GetComponent<PlayerAmmoController>().changeAmmo(hillValue);
             
             //Destroy(gameObject);
             hideItemObject();
-            
+            //механизм респауна объекта после того, как он был подобран игроком
             Invoke("showItemObject", respawnDelay);
         }
     }

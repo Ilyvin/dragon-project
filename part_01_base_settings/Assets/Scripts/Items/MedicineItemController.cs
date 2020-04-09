@@ -28,7 +28,7 @@ public class MedicineItemController : MonoBehaviour
             //Destroy(gameObject);
             
             hideItemObject();
-            
+            //механизм респауна объекта после того, как он был подобран игроком
             Invoke("showItemObject", respawnDelay);
         }
     }
