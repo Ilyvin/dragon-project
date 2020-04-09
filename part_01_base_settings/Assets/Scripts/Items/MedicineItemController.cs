@@ -6,15 +6,24 @@ public class MedicineItemController : MonoBehaviour
 {
     public float hillValue = 25f;
     public float respawnDelay = 5f;
+    private AudioSource audioSource;
+    public GameObject childModel;
 
+    private void Start()
+    {
+        audioSource = gameObject.GetComponent<AudioSource>();
+    }
+    
     private void hideItemObject()
     {
-        gameObject.SetActive(false);
+        childModel.SetActive(false);
+        gameObject.GetComponent<BoxCollider>().enabled = false;
     }
     
     private void showItemObject()
     {
-        gameObject.SetActive(true);
+        childModel.SetActive(true);
+        gameObject.GetComponent<BoxCollider>().enabled = true;
     }
     
     private void OnTriggerEnter(Collider other)
@@ -22,6 +31,7 @@ public class MedicineItemController : MonoBehaviour
         Debug.Log("MedicineItem");
         if (other.gameObject.tag == "Player")
         {
+            audioSource.Play();
             Debug.Log("Player was hilled by: " + hillValue + " hp");
             other.gameObject.GetComponent<PlayerHealthController>().changeHealth(hillValue);
 

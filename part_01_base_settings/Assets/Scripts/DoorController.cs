@@ -5,9 +5,14 @@ using UnityEngine;
 public class DoorController : MonoBehaviour
 {
     public Animator doorAnimator;
+    private AudioSource audioSource;
+    public AudioClip openSound;
+    public AudioClip closeSound;
     void Start()
     {
+        audioSource = gameObject.GetComponent<AudioSource>();
         doorAnimator = gameObject.GetComponentInChildren<Animator>();
+        doorAnimator.SetBool("closed", true);
     }
 
     // Update is called once per frame
@@ -23,7 +28,9 @@ public class DoorController : MonoBehaviour
         {
             if (doorAnimator != null)
             {
-                doorAnimator.SetBool("open", false);
+                doorAnimator.SetBool("closed", false);
+                audioSource.clip = openSound;
+                audioSource.Play();
             }
         }
     }
@@ -35,7 +42,9 @@ public class DoorController : MonoBehaviour
         {
             if (doorAnimator != null)
             {
-                doorAnimator.SetBool("open", true);
+                doorAnimator.SetBool("closed", true);
+                audioSource.clip = closeSound;
+                audioSource.Play();
             }
         }
     }
