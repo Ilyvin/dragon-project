@@ -138,6 +138,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: eab7a3c2c00fc8847905c2ba701f9cb4, type: 3}
   - {fileID: 8300000, guid: a0bdac2b3d1cff54da6ba8727a206833, type: 3}
   - {fileID: 8300000, guid: cef8bfe5850b489498f2ed1a45ee630f, type: 3}
+  stepsSoundVolume: 0.15
+  deathSoundVolume: 0.4
+  attackSoundVolume: 0.5
+  getDamageSoundVolume: 0.3
   destroyDelay: 10
   timeBetweenSteps: 0.9
   timer: 0
@@ -208,10 +212,11 @@ AudioSource:
   m_GameObject: {fileID: 1867234655409182399}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: f8f5531f4ffea1a4db8794b32b6a8a16,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.282
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -398,6 +403,10 @@ MonoBehaviour:
   deathSoundsArray: []
   attackSoundsArray: []
   getDamageSoundsArray: []
+  stepsSoundVolume: 0.3
+  deathSoundVolume: 0.5
+  attackSoundVolume: 0.5
+  getDamageSoundVolume: 0.5
   destroyDelay: 10
   timeBetweenSteps: 0.3
   timer: 0
@@ -1150,6 +1159,10 @@ MonoBehaviour:
   deathSoundsArray: []
   attackSoundsArray: []
   getDamageSoundsArray: []
+  stepsSoundVolume: 0.3
+  deathSoundVolume: 0.5
+  attackSoundVolume: 0.5
+  getDamageSoundVolume: 0.5
   destroyDelay: 10
   timeBetweenSteps: 0.3
   timer: 0

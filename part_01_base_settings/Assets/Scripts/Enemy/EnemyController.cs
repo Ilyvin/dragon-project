@@ -22,6 +22,11 @@ public class EnemyController : MonoBehaviour
     [SerializeField] public AudioClip[] deathSoundsArray;
     [SerializeField] public AudioClip[] attackSoundsArray;
     [SerializeField] public AudioClip[] getDamageSoundsArray;
+
+    public float stepsSoundVolume = 0.3f;
+    public float deathSoundVolume = 0.5f;
+    public float attackSoundVolume = 0.5f;
+    public float getDamageSoundVolume = 0.5f;
     
     public float destroyDelay = 10f;
     private bool isDead = false;
@@ -71,6 +76,7 @@ public class EnemyController : MonoBehaviour
         
         AudioClip clip = deathSoundsArray[Random.Range(0, deathSoundsArray.Length)];
         audioSource.clip = clip;
+        audioSource.volume = deathSoundVolume;
         audioSource.Play();
         
         Invoke("destroyEnemy", destroyDelay);
@@ -88,6 +94,7 @@ public class EnemyController : MonoBehaviour
                 timer = 0;
                 AudioClip clip = stepsSoundsArray[Random.Range(0, stepsSoundsArray.Length)];
                 audioSource.clip = clip;
+                audioSource.volume = stepsSoundVolume;
                 audioSource.Play();
             }
         }
@@ -97,6 +104,7 @@ public class EnemyController : MonoBehaviour
     {
         AudioClip clip = getDamageSoundsArray[Random.Range(0, getDamageSoundsArray.Length)];
         audioSource.clip = clip;
+        audioSource.volume = getDamageSoundVolume;
         audioSource.Play();
     }
     
@@ -131,6 +139,7 @@ public class EnemyController : MonoBehaviour
             //print("Attack player " + Time.time + " damage: " + damage);
             AudioClip clip = attackSoundsArray[Random.Range(0, attackSoundsArray.Length)];
             audioSource.clip = clip;
+            audioSource.volume = attackSoundVolume;
             audioSource.Play();
             player.GetComponent<PlayerHealthController>().changeHealth(-damage);
             yield return new WaitForSeconds(waitTime);

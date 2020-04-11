@@ -19,12 +19,17 @@ public class SettingsMenu : MonoBehaviour
         Debug.Log("toggleVolume RU " + mute);
         audioMixerGroup.audioMixer.SetFloat("volume", mute ? 0 : 80);
     }*/
-
-
-    public void setVolume(float volume)
+    
+    public void setMasterVolume(float volume)
     {
-        Debug.Log("setVolume " + volume);
-        audioMixer.SetFloat("volume", volume);
+        Debug.Log("setMasterVolume " + volume);
+        audioMixer.SetFloat("masterVolume", volume);
+    }
+    
+    public void setMusicVolume(float volume)
+    {
+        Debug.Log("setMusicVolume " + volume);
+        audioMixer.SetFloat("musicVolume", volume);
     }
 
     public void setQuality(int qualityIndex)
