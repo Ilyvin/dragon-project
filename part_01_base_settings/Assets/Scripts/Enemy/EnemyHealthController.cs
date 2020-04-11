@@ -9,9 +9,11 @@ public class EnemyHealthController : MonoBehaviour
     public int expaValue = 10;
     public float currentHealth;
     public event Action<float> OnHealthPctChanged = delegate { };
+    private EnemyController enemyController;
     void Start()
     {
         currentHealth = maxHealth;
+        enemyController = gameObject.GetComponent<EnemyController>();
     }
 
     public void changeHealth(float healthDelta, PlayerController player)
@@ -21,12 +23,12 @@ public class EnemyHealthController : MonoBehaviour
         if (resultHealth <= 0)
         {
             currentHealth = 0;
-            Debug.Log("Enemy is dead");
+            //Debug.Log("Enemy is dead");
             player.expaController.updateExpa(expaValue);
             Debug.Log("Player got Expa: " + expaValue);
             
             OnHealthPctChanged(0f);
-            Destroy(gameObject);
+            enemyController.enemyDeath();
         }
         else if (resultHealth > maxHealth)
         {
@@ -35,6 +37,7 @@ public class EnemyHealthController : MonoBehaviour
         }
         else
         {
+            enemyController.playGetDamageSound();
             currentHealth = resultHealth;
             float currentHealthPct = (float) currentHealth / (float) maxHealth;
             OnHealthPctChanged(currentHealthPct);

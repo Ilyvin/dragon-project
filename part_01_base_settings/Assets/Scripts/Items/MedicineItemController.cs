@@ -28,11 +28,11 @@ public class MedicineItemController : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("MedicineItem");
+        //Debug.Log("MedicineItem");
         if (other.gameObject.tag == "Player")
         {
             audioSource.Play();
-            Debug.Log("Player was hilled by: " + hillValue + " hp");
+            //Debug.Log("Player was hilled by: " + hillValue + " hp");
             other.gameObject.GetComponent<PlayerHealthController>().changeHealth(hillValue);
 
             //Destroy(gameObject);

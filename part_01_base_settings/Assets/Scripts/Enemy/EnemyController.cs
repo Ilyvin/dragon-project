@@ -13,24 +13,96 @@ public class EnemyController : MonoBehaviour
     private IEnumerator attackingProcessCoroutine;
     private bool attackingProcessStarted = false;
     public float damage = 5f;
+
+    public GameObject aliveModel;
+    public GameObject deadModel;
+
+    private AudioSource audioSource;
+    [SerializeField] public AudioClip[] stepsSoundsArray;
+    [SerializeField] public AudioClip[] deathSoundsArray;
+    [SerializeField] public AudioClip[] attackSoundsArray;
+    [SerializeField] public AudioClip[] getDamageSoundsArray;
+    
+    public float destroyDelay = 10f;
+    private bool isDead = false;
+    
+    public float timeBetweenSteps = 0.3f;
+    public float timer = 0f;
+    
     void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         myRB = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
         attackingProcessCoroutine = attackingProcess(oneAttackTime);
+        
+        aliveModel.SetActive(true);
+        deadModel.SetActive(false);
     }
 
     void FixedUpdate()
     {
-        if (Vector3.Distance(gameObject.transform.position, player.transform.position) > attackingDistance)
+        if (!isDead)
         {
-            moveToPlayer();
+            transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
+            
+            if (Vector3.Distance(gameObject.transform.position, player.transform.position) > attackingDistance)
+            {
+                moveToPlayer();
+                playStepSound();
+            }
+            else
+            {
+                attackPlayer();
+            }
         }
         else
         {
-            attackPlayer();
+            myRB.velocity = Vector3.zero;
         }
+    }
+
+    public void enemyDeath()
+    {
+        aliveModel.SetActive(false);
+        deadModel.SetActive(true);
+        gameObject.GetComponent<CapsuleCollider>().enabled = false;
+        isDead = true;
         
+        AudioClip clip = deathSoundsArray[Random.Range(0, deathSoundsArray.Length)];
+        audioSource.clip = clip;
+        audioSource.Play();
+        
+        Invoke("destroyEnemy", destroyDelay);
+    }
+    
+    
+    private void playStepSound()
+    {
+        if (new Vector3(myRB.velocity.x, 0, myRB.velocity.z).magnitude > 0.2f)
+        {
+            timer += Time.deltaTime;
+
+            if(timer > timeBetweenSteps)
+            {
+                timer = 0;
+                AudioClip clip = stepsSoundsArray[Random.Range(0, stepsSoundsArray.Length)];
+                audioSource.clip = clip;
+                audioSource.Play();
+            }
+        }
+    }
+
+    public void playGetDamageSound()
+    {
+        AudioClip clip = getDamageSoundsArray[Random.Range(0, getDamageSoundsArray.Length)];
+        audioSource.clip = clip;
+        audioSource.Play();
+    }
+    
+    private void destroyEnemy()
+    {
+        Destroy(gameObject);
     }
 
     private void moveToPlayer()
@@ -52,16 +124,14 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
-    }
-    
     private IEnumerator attackingProcess(float waitTime)
     {
         while (true)
         {
             //print("Attack player " + Time.time + " damage: " + damage);
+            AudioClip clip = attackSoundsArray[Random.Range(0, attackSoundsArray.Length)];
+            audioSource.clip = clip;
+            audioSource.Play();
             player.GetComponent<PlayerHealthController>().changeHealth(-damage);
             yield return new WaitForSeconds(waitTime);
         }

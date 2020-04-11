@@ -11,20 +11,23 @@ public class PlayerController : MonoBehaviour
 
     // COMPONENTS
     private CharacterController characterController;
-    private Rigidbody rigidbody;
     public GunController gunController;
     private GameObject respawnPoint;
     public PlayerHealthController healthController;
     public PlayerAmmoController ammoController;
     public PlayerExperienceController expaController;
     public PlayerStats playerStats;
+    public PlayerSoundController soundController;
     public MainMenu mainMenu;
 
+    public float timeBetweenSteps = 0.3f;
+    public float timer = 0f;
+    
     public void savePlayer()
     {
         SaveSystem.savePlayer(this);
     }
-    
+
     public void loadPlayer()
     {
         PlayerData data = SaveSystem.loadPlayer();
@@ -35,11 +38,10 @@ public class PlayerController : MonoBehaviour
         ammoController.currentAmmo = data.currentAmmo;
         expaController.currentExpa = data.currentExpa;
     }
-    
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-        rigidbody = GetComponent<Rigidbody>();
         camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         respawnPoint = GameObject.FindGameObjectWithTag("Respawn");
         healthController = gameObject.GetComponent<PlayerHealthController>();
@@ -47,10 +49,11 @@ public class PlayerController : MonoBehaviour
         expaController = gameObject.GetComponent<PlayerExperienceController>();
         playerStats = gameObject.GetComponent<PlayerStats>();
         mainMenu = GameObject.FindGameObjectWithTag("MainMenuCanvas").GetComponent<MainMenu>();
+        soundController = gameObject.GetComponent<PlayerSoundController>();
         respawnPlayer();
     }
 
-    
+
     void FixedUpdate()
     {
         if (!mainMenu.isGamePaused())
@@ -58,10 +61,12 @@ public class PlayerController : MonoBehaviour
             moveInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
             moveVelocity = moveInput * speed;
             characterController.SimpleMove(moveVelocity);
-            
+
+            playStepSound();
+
             rotatePlayerToMousePosition();
             //playerAttackControls();
-            
+
             if (Input.GetMouseButtonDown(0))
             {
                 gunController.startShooting(true);
@@ -71,31 +76,24 @@ public class PlayerController : MonoBehaviour
             {
                 gunController.startShooting(false);
             }
-            
-            savingSystemControls();
-        }
-    }
-    
-    
-    /*
-     СТАРЫЙ ПОДХОД в управлении персонажем через RigidBody
-     
-     void FixedUpdate()
-    {
-        rigidbody.velocity = moveVelocity;
-    }
-    void Update()
-    {
-        if (!mainMenu.isGamePaused())
-        {
-            moveInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-            moveVelocity = moveInput * speed;
 
-            rotatePlayerToMousePosition();
-            playerAttackControls();
             savingSystemControls();
         }
-    }*/
+    }
+
+    private void playStepSound()
+    {
+        if (new Vector3(characterController.velocity.x, 0, characterController.velocity.z).magnitude > 0.2f)
+        {
+            timer += Time.deltaTime;
+
+            if(timer > timeBetweenSteps)
+            {
+                timer = 0;
+                soundController.playOneStep();
+            }
+        }
+    }
 
     private void rotatePlayerToMousePosition()
     {
@@ -179,6 +177,25 @@ public class PlayerController : MonoBehaviour
         return transform.position;
     }
     
+    /*
+     СТАРЫЙ ПОДХОД в управлении персонажем через RigidBody
+     
+     void FixedUpdate()
+    {
+        rigidbody.velocity = moveVelocity;
+    }
+    void Update()
+    {
+        if (!mainMenu.isGamePaused())
+        {
+            moveInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+            moveVelocity = moveInput * speed;
+
+            rotatePlayerToMousePosition();
+            playerAttackControls();
+            savingSystemControls();
+        }
+    }*/
     void someOldCode()
     {
         /*if (Input.GetMouseButtonUp(0)) {
@@ -203,7 +220,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }*/
-        
+
         /*float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
