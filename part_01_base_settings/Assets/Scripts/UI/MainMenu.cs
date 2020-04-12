@@ -22,6 +22,11 @@ public class MainMenu : MonoBehaviour
     
     public void LoadGame()
     {
+        if (gameIsPaused)
+        {
+            Resume();
+        }
+
         playerController.loadPlayer();
     }
     public void playGame()

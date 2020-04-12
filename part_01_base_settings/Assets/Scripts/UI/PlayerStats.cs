@@ -8,15 +8,19 @@ public class PlayerStats : MonoBehaviour
 {
     public Text hpValue;
     public Text ammoValue;
+    public Text magazinAmmoValue;
     public Text expaValue;
     public Text userMessage;
     private PlayerHealthController healthController;
     private PlayerAmmoController ammoController;
+    private GunController gunController;
     private PlayerExperienceController expaController;
+
     void Start()
     {
         healthController = gameObject.GetComponent<PlayerHealthController>();
         ammoController = gameObject.GetComponent<PlayerAmmoController>();
+        gunController = gameObject.GetComponent<PlayerController>().gunController;
         expaController = gameObject.GetComponent<PlayerExperienceController>();
     }
 
@@ -25,6 +29,7 @@ public class PlayerStats : MonoBehaviour
     {
         hpValue.GetComponent<Text>().text = healthController.currentHealth.ToString();
         ammoValue.GetComponent<Text>().text = ammoController.currentAmmo.ToString();
+        magazinAmmoValue.GetComponent<Text>().text = gunController.currentMagazinAmmo.ToString();
         expaValue.GetComponent<Text>().text = expaController.currentExpa.ToString();
     }
 

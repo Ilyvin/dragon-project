@@ -9,6 +9,7 @@ public class PlayerData
     public float currentHealth;
     public int currentExpa;
     public int currentAmmo;
+    public int currentMagazinAmmo;
 
     public float[] position;
     
@@ -17,6 +18,7 @@ public class PlayerData
         currentHealth = playerController.healthController.currentHealth;
         currentExpa = playerController.expaController.currentExpa;
         currentAmmo = playerController.ammoController.currentAmmo;
+        currentMagazinAmmo = playerController.gunController.currentMagazinAmmo; 
 
         position = new float[3];
         position[0] = playerController.transform.position.x;

@@ -34,6 +34,7 @@ public class AmmoItemController : MonoBehaviour
             audioSource.Play();
             Debug.Log("Player's ammo was extended: " + hillValue + " items");
             other.gameObject.GetComponent<PlayerAmmoController>().changeAmmo(hillValue);
+            other.gameObject.GetComponent<PlayerController>().gunController.fillMagazinIfEmpty();
             
             //Destroy(gameObject);
             hideItemObject();

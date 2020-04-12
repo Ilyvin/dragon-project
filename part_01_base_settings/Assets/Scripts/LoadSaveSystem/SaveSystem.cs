@@ -12,6 +12,7 @@ public static class SaveSystem
         BinaryFormatter formatter = new BinaryFormatter();
 
         String path = Application.persistentDataPath + "/player.fun";
+        Debug.Log("File saved by path: " + path);
         FileStream stream = new FileStream(path, FileMode.Create);
         PlayerData data = new PlayerData(playerController);
 
@@ -28,6 +29,7 @@ public static class SaveSystem
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
             PlayerData data = formatter.Deserialize(stream) as PlayerData;
+            Debug.Log("File loaded by path: " + path);
 
             stream.Close();
             return data;

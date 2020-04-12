@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     // COMPONENTS
     private CharacterController characterController;
     public GunController gunController;
-    private GameObject respawnPoint;
+    public GameObject respawnPoint;
     public PlayerHealthController healthController;
     public PlayerAmmoController ammoController;
     public PlayerExperienceController expaController;
@@ -31,11 +31,13 @@ public class PlayerController : MonoBehaviour
     public void loadPlayer()
     {
         PlayerData data = SaveSystem.loadPlayer();
+        Debug.Log("Load Player from data:" + data);
 
         Vector3 position = new Vector3(data.position[0], data.position[1], data.position[2]);
         transform.position = position;
         healthController.currentHealth = data.currentHealth;
         ammoController.currentAmmo = data.currentAmmo;
+        gunController.currentMagazinAmmo = data.currentMagazinAmmo;
         expaController.currentExpa = data.currentExpa;
     }
 
@@ -43,42 +45,43 @@ public class PlayerController : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        respawnPoint = GameObject.FindGameObjectWithTag("Respawn");
+        //respawnPoint = GameObject.FindGameObjectWithTag("Respawn");
         healthController = gameObject.GetComponent<PlayerHealthController>();
         ammoController = gameObject.GetComponent<PlayerAmmoController>();
         expaController = gameObject.GetComponent<PlayerExperienceController>();
         playerStats = gameObject.GetComponent<PlayerStats>();
         mainMenu = GameObject.FindGameObjectWithTag("MainMenuCanvas").GetComponent<MainMenu>();
         soundController = gameObject.GetComponent<PlayerSoundController>();
+        gunController = gameObject.GetComponentInChildren<GunController>();
         respawnPlayer();
     }
-
 
     void FixedUpdate()
     {
         if (!mainMenu.isGamePaused())
         {
-            moveInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-            moveVelocity = moveInput * speed;
-            characterController.SimpleMove(moveVelocity);
-
-            playStepSound();
-
-            rotatePlayerToMousePosition();
-            //playerAttackControls();
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                gunController.startShooting(true);
-            }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                gunController.startShooting(false);
-            }
-
+            playerMovementControls();
+            playerAttackControls();
             savingSystemControls();
+            
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                //transform.position = respawnPoint.transform.position;
+                respawnPlayer();
+            }
         }
+    }
+
+    private void playerMovementControls()
+    {
+        moveInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+        //Debug.Log("moveInput: " + moveInput);
+        moveVelocity = moveInput * speed;
+        characterController.SimpleMove(moveVelocity);
+        
+        playStepSound();
+        
+        rotatePlayerToMousePosition();
     }
 
     private void playStepSound()
@@ -141,8 +144,8 @@ public class PlayerController : MonoBehaviour
     public void respawnPlayer()
     {
         transform.position = respawnPoint.transform.position;
-        healthController.changeHealth(healthController.maxHealth);
-        playerStats.setUserMessage("");
+        //healthController.changeHealth(healthController.maxHealth);
+        //playerStats.setUserMessage("kk");
     }
 
     private void OnCollisionEnter(Collision other)
