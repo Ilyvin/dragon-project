@@ -41,8 +41,16 @@ public class BulletController : MonoBehaviour
         
         if (other.gameObject.tag == "Enemy")
         {
-            //Debug.Log("Enemy got damage = " + damage);
             other.gameObject.GetComponent<EnemyHealthController>().changeHealth(-damage, player);
+            //щас сделано так, что пуля летит сквозь всех врагов, не останавливаясь.
+            //этот эффект надо будет потом использовать для того, чтобы типо того это был мега-скилл бронебойного выстрела.
+            //но для обычных выстрелов этот режим должен быть недоступен и пуля должна исчезнуть при первом же попадении во врага.
+            
+            Destroy(gameObject);
+        }
+        else if (other.gameObject.tag == "EnemyRespawnBase")
+        {
+            other.gameObject.GetComponent<EnemyRespawnHealthController>().changeHealth(-damage, player);
             //щас сделано так, что пуля летит сквозь всех врагов, не останавливаясь.
             //этот эффект надо будет потом использовать для того, чтобы типо того это был мега-скилл бронебойного выстрела.
             //но для обычных выстрелов этот режим должен быть недоступен и пуля должна исчезнуть при первом же попадении во врага.

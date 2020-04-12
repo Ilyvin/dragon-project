@@ -3,17 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealthController : MonoBehaviour
+public class EnemyRespawnHealthController : MonoBehaviour
 {
-    public float maxHealth = 100f;
-    public int expaValue = 10;
+    public float maxHealth = 200f;
+    public int expaValue = 30;
     public float currentHealth;
     public event Action<float> OnHealthPctChanged = delegate { };
-    private EnemyController enemyController;
+    private EnemyRespawnController enemyRespawnController;
     void Start()
     {
         currentHealth = maxHealth;
-        enemyController = gameObject.GetComponent<EnemyController>();
+        enemyRespawnController = gameObject.GetComponent<EnemyRespawnController>();
     }
 
     public void changeHealth(float healthDelta, PlayerController player)
@@ -28,7 +28,7 @@ public class EnemyHealthController : MonoBehaviour
             Debug.Log("Player got Expa: " + expaValue);
             
             OnHealthPctChanged(0f);
-            enemyController.enemyDeath();
+            enemyRespawnController.enemyRespawnBaseDeath();
         }
         else if (resultHealth > maxHealth)
         {
@@ -37,7 +37,7 @@ public class EnemyHealthController : MonoBehaviour
         }
         else
         {
-            enemyController.playGetDamageSound();
+            enemyRespawnController.playGetDamageSound();
             currentHealth = resultHealth;
             float currentHealthPct = (float) currentHealth / (float) maxHealth;
             OnHealthPctChanged(currentHealthPct);

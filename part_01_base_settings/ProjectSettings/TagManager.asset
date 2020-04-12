@@ -9,6 +9,7 @@ TagManager:
   - MedicineItem
   - Weapon
   - MainMenuCanvas
+  - EnemyRespawnBase
   layers:
   - Default
   - TransparentFX
