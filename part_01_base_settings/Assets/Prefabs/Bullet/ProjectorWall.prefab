@@ -10,14 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 5476469485559155214}
   - component: {fileID: 5476469485559155213}
-  - component: {fileID: 5476469485559155215}
+  - component: {fileID: 1097353632098388856}
   m_Layer: 0
   m_Name: ProjectorWall
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5476469485559155214
 Transform:
   m_ObjectHideFlags: 0
@@ -51,16 +51,16 @@ Projector:
   m_IgnoreLayers:
     serializedVersion: 2
     m_Bits: 1335
---- !u!114 &5476469485559155215
+--- !u!114 &1097353632098388856
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5476469485559155212}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4e0433f0ee8d1d42bdf257726fc5d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceTolerance: 11.86
+  lifetime: 15
