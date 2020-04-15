@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     public GameObject masterVolumeObject;
     public float masterVolume;
     public float musicVolume;
+    public bool violenceEnabled;
 
     void Start()
     {
@@ -22,6 +23,11 @@ public class GameController : MonoBehaviour
             masterVolumeObject.GetComponent<Slider>().value = masterVolume;
             musicVolumeObject.GetComponent<Slider>().value = musicVolume;
         }
+    }
+
+    public void setViolence(bool flag)
+    {
+        violenceEnabled = flag;
     }
 
     // Update is called once per frame

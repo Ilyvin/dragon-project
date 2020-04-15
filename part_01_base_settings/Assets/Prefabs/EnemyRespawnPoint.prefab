@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4425955295002225362}
   - component: {fileID: 4425955295002225366}
   - component: {fileID: 4425955295002225367}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Alive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4425955295095605741}
   - component: {fileID: 4425955295095605740}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 4425955295241694961}
   - component: {fileID: 4425955295241694967}
   - component: {fileID: 4425955295241694960}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 4425955295421421274}
   - component: {fileID: 4425955295421421272}
   - component: {fileID: 4425955295421421273}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: foreground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4425955295583832316}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -317,7 +317,7 @@ GameObject:
   - component: {fileID: 4425955295593548165}
   - component: {fileID: 4425955295593548170}
   - component: {fileID: 4425955295593548175}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: EnemyRespawnPoint
   m_TagString: EnemyRespawnBase
   m_Icon: {fileID: 0}
@@ -333,7 +333,7 @@ Transform:
   m_GameObject: {fileID: 4425955295593548167}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.04, y: 0, z: 4.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.009919651, y: 1, z: 0.008613265}
   m_Children:
   - {fileID: 4425955295095605741}
   - {fileID: 4425955295583832316}
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 1867234655409182399, guid: bc353bd4a2a1a8c4c8495d177ed9c6d1,
     type: 3}
-  respawnTime: 2
+  respawnTime: 10
   enemiesMaximumNumber: 20
   aliveModel: {fileID: 4425955295002225363}
   deadModel: {fileID: 4425955296571702650}
@@ -550,7 +550,7 @@ GameObject:
   - component: {fileID: 4425955296421584785}
   - component: {fileID: 4425955296421584786}
   - component: {fileID: 4425955296421584787}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -649,7 +649,7 @@ GameObject:
   - component: {fileID: 4425955296571702649}
   - component: {fileID: 4425955296571702655}
   - component: {fileID: 4425955296571702648}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Dead
   m_TagString: Untagged
   m_Icon: {fileID: 0}

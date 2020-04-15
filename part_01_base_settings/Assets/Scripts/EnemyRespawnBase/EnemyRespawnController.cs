@@ -48,10 +48,14 @@ public class EnemyRespawnController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!coroutineStarted)
+        if (other.gameObject.tag == "Player")
         {
-            coroutineStarted = true;
-            StartCoroutine(InstantiateEnemy(respawnTime, enemiesMaximumNumber));
+            Debug.Log("Генерация волны врагов началась...");
+            if (!coroutineStarted)
+            {
+                coroutineStarted = true;
+                StartCoroutine(InstantiateEnemy(respawnTime, enemiesMaximumNumber));
+            }
         }
     }
 

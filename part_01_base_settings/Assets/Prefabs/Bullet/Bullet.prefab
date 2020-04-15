@@ -105,3 +105,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  player: {fileID: 0}
+  bulletHolePositionOffset: 1.5
+  bulletWallHolePrefab: {fileID: 5476469485559155212, guid: 1c609d3a45820f44b87ec38fe9ec219b,
+    type: 3}
+  bulletBloodHolePrefab: {fileID: 7698531871146745372, guid: 31245b5247602f54db4e7ece3f599992,
+    type: 3}
+  bulletHoleEnemyBasePrefab: {fileID: 5709756876503319080, guid: 13ad764b6247e6c4398daa793f986877,
+    type: 3}
