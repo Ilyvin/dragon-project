@@ -39,7 +39,7 @@ public class BulletController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Bullet met trigger: " + other );
+        Debug.Log("OLOLO Bullet met trigger: " + other );
     }
 
     void OnCollisionEnter(Collision other)

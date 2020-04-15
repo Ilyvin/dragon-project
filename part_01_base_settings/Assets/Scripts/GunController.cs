@@ -44,15 +44,15 @@ public class GunController : MonoBehaviour
         }
 
         shootingProcessStarted = false;
-        Debug.Log("Line 41");
+        //Debug.Log("Line 41");
 
         if (currentMagazinAmmo < magazinLimit)
         {
-            Debug.Log("Line 45");
+            //Debug.Log("Line 45");
             int currentAmmo = playerController.ammoController.getCurrentAmmo();
             if (currentAmmo > 0)
             {
-                Debug.Log("Line 49");
+                //Debug.Log("Line 49");
 
                 int requiredAmmo = magazinLimit - currentMagazinAmmo;
 
@@ -67,23 +67,23 @@ public class GunController : MonoBehaviour
                     playerController.ammoController.changeAmmo(-currentAmmo);
                 }
 
-                Debug.Log("Line 64");
+                //Debug.Log("Line 64");
 
                 audioSource.clip = ammoReloadSound;
                 audioSource.Play();
-                Debug.Log("Line 68");
+                //Debug.Log("Line 68");
 
                 Invoke("setMagazinFilled", magazinFillDelay);
             }
             else
             {
                 playerController.playerStats.setUserMessage("Чувак, патроны закончились");
-                Debug.Log("Нет патронов.");
+                //Debug.Log("Нет патронов.");
             }
         }
         else
         {
-            Debug.Log("Магазин полон.");
+            //Debug.Log("Магазин полон.");
         }
     }
 
@@ -92,30 +92,30 @@ public class GunController : MonoBehaviour
         if (currentMagazinAmmo == 0)
         {
             fillMagazin();
-            Debug.Log("Автоматически пополняю магазин.");
+            //Debug.Log("Автоматически пополняю магазин.");
         }
         else
         {
-            Debug.Log("Автоматически пополнять магазин не надо.");
+            //Debug.Log("Автоматически пополнять магазин не надо.");
         }
     }
 
     private void setMagazinFilled()
     {
-        Debug.Log("Line 99 setMagazinFilled");
+        //Debug.Log("Line 99 setMagazinFilled");
         magazinFilled = true;
     }
 
     public void changeMagazinAmmo(int ammoDelta)
     {
-        Debug.Log("Line 105 changeMagazinAmmo");
+        //Debug.Log("Line 105 changeMagazinAmmo");
 
         int result = currentMagazinAmmo + ammoDelta;
 
         if (result <= 0)
         {
             currentMagazinAmmo = 0;
-            Debug.Log("Пора перезарядить магазин");
+            //Debug.Log("Пора перезарядить магазин");
             fillMagazin();
         }
         else if (result > magazinLimit)
@@ -134,13 +134,13 @@ public class GunController : MonoBehaviour
         {
             if (magazinFilled)
             {
-                Debug.Log("Line 131 if (magazinFilled)");
+                //Debug.Log("Line 131 if (magazinFilled)");
 
                 if (currentMagazinAmmo > 0)
                 {
                     if (!shootingProcessStarted)
                     {
-                        Debug.Log("Line 137 StartCoroutine(shootBulletCoroutine);");
+                        //Debug.Log("Line 137 StartCoroutine(shootBulletCoroutine);");
                         shootBulletCoroutine = shootingBulletProcess(timeBetweenShots);
                         StartCoroutine(shootBulletCoroutine);
                         shootingProcessStarted = true;
@@ -156,13 +156,13 @@ public class GunController : MonoBehaviour
             }
             else
             {
-                Debug.Log("Line 151 else if (magazinFilled)");
-                Debug.Log("Line 137 StopCoroutine(shootBulletCoroutine);");
+                //Debug.Log("Line 151 else if (magazinFilled)");
+                //Debug.Log("Line 137 StopCoroutine(shootBulletCoroutine);");
             }
 
             if (playerController.ammoController.currentAmmo + currentMagazinAmmo == 0)
             {
-                Debug.Log("-----Патронов нет!");
+                //Debug.Log("-----Патронов нет!");
                 audioSource.clip = noAmmoSound;
                 audioSource.Play();
             }
@@ -180,10 +180,10 @@ public class GunController : MonoBehaviour
 
     private IEnumerator shootingBulletProcess(float waitTime)
     {
-        Debug.Log("Line 178 shootingBulletProcess");
+        //Debug.Log("Line 178 shootingBulletProcess");
         while (currentMagazinAmmo > 0)
         {
-            Debug.Log("Line 181 while (currentMagazinAmmo > 0)");
+            //Debug.Log("Line 181 while (currentMagazinAmmo > 0)");
             audioSource.clip = shotSound;
             audioSource.Play();
             BulletController newBullet =
@@ -192,9 +192,9 @@ public class GunController : MonoBehaviour
             newBullet.setDamage(damage);
             newBullet.setPlayerController(playerController);
             //playerController.ammoController.changeAmmo(-1);
-            Debug.Log("Line 190 before changeMagazinAmmo(-1);");
+            //Debug.Log("Line 190 before changeMagazinAmmo(-1);");
             changeMagazinAmmo(-1);
-            Debug.Log("Line 192 after changeMagazinAmmo(-1);");
+            //Debug.Log("Line 192 after changeMagazinAmmo(-1);");
             yield return new WaitForSeconds(waitTime);
         }
     }

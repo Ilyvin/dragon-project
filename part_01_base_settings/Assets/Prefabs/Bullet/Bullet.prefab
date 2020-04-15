@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8152948267850423995}
   - component: {fileID: 6280409905864216758}
   - component: {fileID: 1396065434054940955}
+  - component: {fileID: 977881271976408083}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -113,3 +114,16 @@ MonoBehaviour:
     type: 3}
   bulletHoleEnemyBasePrefab: {fileID: 5709756876503319080, guid: 13ad764b6247e6c4398daa793f986877,
     type: 3}
+--- !u!135 &977881271976408083
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411000931806230908}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
