@@ -13,6 +13,7 @@ public class BulletController : MonoBehaviour
     public GameObject bulletWallHolePrefab;
     public GameObject bulletBloodHolePrefab;
     public GameObject bulletHoleEnemyBasePrefab;
+    public GameObject enemyBloodPuddlePrefab;
     private GameController gameController;
     
     // Start is called before the first frame update
@@ -55,8 +56,13 @@ public class BulletController : MonoBehaviour
 
             if (gameController.violenceEnabled)
             {
-                GameObject bulletHole = Instantiate(bulletBloodHolePrefab, transform.position - transform.forward * bulletHolePositionOffset, transform.rotation);
+                GameObject bulletHole = Instantiate(bulletBloodHolePrefab, 
+                    transform.position - transform.forward * bulletHolePositionOffset, 
+                    transform.rotation);
                 bulletHole.transform.parent = other.gameObject.GetComponent<EnemyController>().aliveModel.transform;
+
+                GameObject bloodPuddle =
+                    Instantiate(enemyBloodPuddlePrefab, transform.position, Quaternion.Euler(new Vector3(90, Random.Range(0, 360), 0)));
             }
             
             Destroy(gameObject);

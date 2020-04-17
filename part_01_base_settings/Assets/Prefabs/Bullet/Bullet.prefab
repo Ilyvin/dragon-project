@@ -114,6 +114,8 @@ MonoBehaviour:
     type: 3}
   bulletHoleEnemyBasePrefab: {fileID: 5709756876503319080, guid: 13ad764b6247e6c4398daa793f986877,
     type: 3}
+  enemyBloodPuddlePrefab: {fileID: 4445853726062538220, guid: fb511ad0514f6ac49bda27e4efafdb4c,
+    type: 3}
 --- !u!135 &977881271976408083
 SphereCollider:
   m_ObjectHideFlags: 0
