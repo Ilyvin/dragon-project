@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     public float timeBetweenSteps = 0.3f;
     public float timer = 0f;
+    public bool playerRespawnNeeded;
     
     public void savePlayer()
     {
@@ -59,8 +60,8 @@ public class PlayerController : MonoBehaviour
         mainMenu = GameObject.FindGameObjectWithTag("MainMenuCanvas").GetComponent<MainMenu>();
         soundController = gameObject.GetComponent<PlayerSoundController>();
         gunController = gameObject.GetComponentInChildren<GunController>();
-        respawnPlayer();
-
+        playerRespawnNeeded = true;
+        
         //first fill
         gunController.fillMagazin();
         Debug.Log("[PlayerController] End of Start");
@@ -81,12 +82,6 @@ public class PlayerController : MonoBehaviour
     private int i = 0;
     void FixedUpdate()
     {
-        if (i == 0)
-        {
-            Debug.Log("[PlayerController] FixedUpdate() first call");
-            i++;
-        }
-
         if (!mainMenu.isGamePaused())
         {
             playerMovementControls();
@@ -97,6 +92,13 @@ public class PlayerController : MonoBehaviour
             {
                 //transform.position = respawnPoint.transform.position;
                 respawnPlayer();
+            }
+            
+            if (playerRespawnNeeded)
+            {
+                respawnPlayer();
+                Debug.Log("*************[PlayerController] RESPAWN");
+                playerRespawnNeeded = false;
             }
         }
     }
@@ -173,8 +175,7 @@ public class PlayerController : MonoBehaviour
     public void respawnPlayer()
     {
         transform.position = respawnPoint.transform.position;
-        //healthController.changeHealth(healthController.maxHealth);
-        //playerStats.setUserMessage("kk");
+        healthController.changeHealth(healthController.maxHealth);
     }
 
     private void OnCollisionEnter(Collision other)

@@ -23,7 +23,8 @@ public class PlayerHealthController : MonoBehaviour
         {
             currentHealth = 0;
             player.playerStats.setUserMessage("Чувак, ты оглушён");
-            player.respawnPlayer();
+            //Debug.Log("****************Чувак, ты оглушён");
+            player.playerRespawnNeeded = true;
         }
         else if (resultHealth > maxHealth)
         {
