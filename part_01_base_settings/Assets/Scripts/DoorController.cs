@@ -23,7 +23,7 @@ public class DoorController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Door Open");
+        //Debug.Log("Door Open");
         if (other.gameObject.tag == "Player")
         {
             if (doorAnimator != null)
@@ -37,7 +37,7 @@ public class DoorController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Door Close");
+        //Debug.Log("Door Close");
         if (other.gameObject.tag == "Player")
         {
             if (doorAnimator != null)

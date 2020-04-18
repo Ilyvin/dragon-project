@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,16 +49,44 @@ public class PlayerController : MonoBehaviour
         //respawnPoint = GameObject.FindGameObjectWithTag("Respawn");
         healthController = gameObject.GetComponent<PlayerHealthController>();
         ammoController = gameObject.GetComponent<PlayerAmmoController>();
+        ammoController.player = this;
+        Debug.Log("[PlayerController] ammoController = " + ammoController);
+        Debug.Log("[PlayerController] ammoController.currentAmmo = " + ammoController.currentAmmo);
         expaController = gameObject.GetComponent<PlayerExperienceController>();
         playerStats = gameObject.GetComponent<PlayerStats>();
+        playerStats.setUserMessage("Ну поехали");
+        Debug.Log("[PlayerController] playerStats.setUserMessage - Ну поехали");
         mainMenu = GameObject.FindGameObjectWithTag("MainMenuCanvas").GetComponent<MainMenu>();
         soundController = gameObject.GetComponent<PlayerSoundController>();
         gunController = gameObject.GetComponentInChildren<GunController>();
         respawnPlayer();
+
+        //first fill
+        gunController.fillMagazin();
+        Debug.Log("[PlayerController] End of Start");
     }
 
+    public void setUserMessage(String msg)
+    {
+        try
+        {
+            playerStats.setUserMessage(msg);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("ERROR :" + e);
+        }
+    }
+
+    private int i = 0;
     void FixedUpdate()
     {
+        if (i == 0)
+        {
+            Debug.Log("[PlayerController] FixedUpdate() first call");
+            i++;
+        }
+
         if (!mainMenu.isGamePaused())
         {
             playerMovementControls();

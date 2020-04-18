@@ -10,7 +10,9 @@ public class GunController : MonoBehaviour
     public BulletController bulletPrefab;
     public float bulletSpeed = 50f;
     public float timeBetweenShots = 0.5f;
-
+    public bool isArmorPiercing = false;//бронебойный
+    public int enemiesPiercingLimit = 1;//количество врагов, которых можно убить подряд насквозь
+    
     public int magazinLimit = 10;
     public int currentMagazinAmmo = 0;
     public bool magazinFilled = false;
@@ -29,27 +31,29 @@ public class GunController : MonoBehaviour
     private void Start()
     {
         playerController = gameObject.GetComponentInParent<PlayerController>();
+        Debug.Log("playerController = " + playerController);
         audioSource = gameObject.GetComponent<AudioSource>();
         audioSource.clip = shotSound;
 
-        fillMagazin();
+        //fillMagazin();
     }
 
     public void fillMagazin()
     {
+        Debug.Log("fillMagazin");
         magazinFilled = false;
         if (shootBulletCoroutine != null)
         {
             StopCoroutine(shootBulletCoroutine);
         }
-
         shootingProcessStarted = false;
-        //Debug.Log("Line 41");
 
         if (currentMagazinAmmo < magazinLimit)
         {
-            //Debug.Log("Line 45");
+            Debug.Log("[GunController] playerController.ammoController.currentAmmo = " + playerController.ammoController.currentAmmo);
+            Debug.Log("[GunController] playerController.ammoController.getCurrentAmmo() = " + playerController.ammoController.getCurrentAmmo());
             int currentAmmo = playerController.ammoController.getCurrentAmmo();
+            Debug.Log("currentAmmo = " + currentAmmo);
             if (currentAmmo > 0)
             {
                 //Debug.Log("Line 49");
@@ -190,6 +194,8 @@ public class GunController : MonoBehaviour
                 Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             newBullet.speed = bulletSpeed;
             newBullet.setDamage(damage);
+            newBullet.setIsArmorPiercing(isArmorPiercing);
+            newBullet.setEnemiesPiercingLimit(enemiesPiercingLimit);
             newBullet.setPlayerController(playerController);
             //playerController.ammoController.changeAmmo(-1);
             //Debug.Log("Line 190 before changeMagazinAmmo(-1);");

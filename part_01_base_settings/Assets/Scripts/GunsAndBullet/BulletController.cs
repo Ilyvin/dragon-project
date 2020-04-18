@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BulletController : MonoBehaviour
 {
@@ -8,6 +10,9 @@ public class BulletController : MonoBehaviour
     public PlayerController player;
     private float lifetime = 10f;
     private float damage;
+    private bool isArmorPiercing; //бронебойный
+    private int enemiesPiercingCounter;//счётчик убитых насквозь врагов
+    private int enemiesPiercingLimit;//количество врагов, которых можно убить подряд насквозь
     
     public float bulletHolePositionOffset = 1.5f;
     public GameObject bulletWallHolePrefab;
@@ -20,7 +25,9 @@ public class BulletController : MonoBehaviour
     void Start()
     {
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        Debug.Log("[Bullet Controller] game Controller: " + gameController);
         Destroy(gameObject, lifetime);
+        enemiesPiercingCounter = 0;
     }
 
     public void setPlayerController(PlayerController playerController)
@@ -36,6 +43,16 @@ public class BulletController : MonoBehaviour
     public void setDamage(float damage)
     {
         this.damage = damage;
+    }
+    
+    public void setIsArmorPiercing(bool isArmorPiercing)
+    {
+        this.isArmorPiercing = isArmorPiercing;
+    }
+    
+    public void setEnemiesPiercingLimit(int enemiesPiercingLimit)
+    {
+        this.enemiesPiercingLimit = enemiesPiercingLimit;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -63,9 +80,42 @@ public class BulletController : MonoBehaviour
 
                 GameObject bloodPuddle =
                     Instantiate(enemyBloodPuddlePrefab, transform.position, Quaternion.Euler(new Vector3(90, Random.Range(0, 360), 0)));
+                
+                //поставим размер лужи в соответствии с уроном
+                Projector projector = bloodPuddle.GetComponent<Projector>();
+                if (0 < damage && damage <= 20)
+                {
+                    projector.orthographicSize = 1;
+                }
+                if (20 < damage && damage <= 40)
+                {
+                    projector.orthographicSize = 3;
+                }
+                if (40 < damage && damage <= 60)
+                {
+                    projector.orthographicSize = 5;
+                }
+                if (60 < damage && damage <= 80)
+                {
+                    projector.orthographicSize = 7;
+                }
+                if (80 < damage && damage <= 100)
+                {
+                    projector.orthographicSize = 10;
+                }
             }
+
+            enemiesPiercingCounter++;
+            Debug.Log("enemiesPiercingCounter = " + enemiesPiercingCounter);
             
-            Destroy(gameObject);
+            if (!isArmorPiercing)
+            {
+                Destroy(gameObject);
+            }//подсчёт, когда остановить бронебойную пулю (enemiesPiercingLimit - число врагов, убитых подряд)
+            else if ( enemiesPiercingCounter >= enemiesPiercingLimit)
+            {
+                Destroy(gameObject);
+            }
         }
         else if (other.gameObject.tag == "EnemyRespawnBase")
         {

@@ -13,7 +13,7 @@ public class PlayerAmmoController : MonoBehaviour
     
     void Start()
     {
-        player = gameObject.GetComponent<PlayerController>();
+        //player = gameObject.GetComponent<PlayerController>();
     }
 
     public int getCurrentAmmo()
@@ -36,12 +36,12 @@ public class PlayerAmmoController : MonoBehaviour
         else if (result > maxAmmo)
         {
             currentAmmo = maxAmmo;
-            player.playerStats.setUserMessage("");
+            player.setUserMessage("");
         }
         else
         {
             currentAmmo = result;
-            player.playerStats.setUserMessage("");
+            player.setUserMessage("");
         }
     }
 }

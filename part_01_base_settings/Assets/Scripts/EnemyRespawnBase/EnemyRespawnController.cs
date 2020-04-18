@@ -24,6 +24,9 @@ public class EnemyRespawnController : MonoBehaviour
     public float getDamageSoundVolume = 0.5f;
 
     public float destroyDelay = 10f;
+    private bool baseIsAlive;
+    
+    private IEnumerator respawnProcessCoroutine;
 
     private void Start()
     {
@@ -31,6 +34,8 @@ public class EnemyRespawnController : MonoBehaviour
         aliveModel.SetActive(true);
         deadModel.SetActive(false);
         audioSource = GetComponent<AudioSource>();
+        baseIsAlive = true;
+        respawnProcessCoroutine = InstantiateEnemy(respawnTime, enemiesMaximumNumber);
     }
 
     private IEnumerator InstantiateEnemy(int waitTime, int maximumOfEnemies)
@@ -48,13 +53,16 @@ public class EnemyRespawnController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (baseIsAlive)
         {
-            Debug.Log("Генерация волны врагов началась...");
-            if (!coroutineStarted)
+            if (other.gameObject.tag == "Player")
             {
-                coroutineStarted = true;
-                StartCoroutine(InstantiateEnemy(respawnTime, enemiesMaximumNumber));
+                Debug.Log("Генерация волны врагов началась...");
+                if (!coroutineStarted)
+                {
+                    coroutineStarted = true;
+                    StartCoroutine(respawnProcessCoroutine);
+                }
             }
         }
     }
@@ -64,6 +72,8 @@ public class EnemyRespawnController : MonoBehaviour
         aliveModel.SetActive(false);
         deadModel.SetActive(true);
         gameObject.GetComponent<BoxCollider>().enabled = false;
+        baseIsAlive = false;
+        StopCoroutine(respawnProcessCoroutine);
 
         AudioClip clip = deathSoundsArray[Random.Range(0, deathSoundsArray.Length)];
         audioSource.clip = clip;
