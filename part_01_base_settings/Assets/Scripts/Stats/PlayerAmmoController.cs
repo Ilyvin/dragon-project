@@ -6,14 +6,11 @@ public class PlayerAmmoController : MonoBehaviour
 {
     public int maxAmmo = 50;
     public int currentAmmo = 5;
-    public PlayerController player;
-    //public int magazinLimit = 10;
-    //public int currentMagazinAmmo = 10;
-    //private int bulletCounter;
+    private PlayerController playerController;
     
     void Start()
     {
-        //player = gameObject.GetComponent<PlayerController>();
+        playerController = gameObject.GetComponent<PlayerController>();
     }
 
     public int getCurrentAmmo()
@@ -21,8 +18,29 @@ public class PlayerAmmoController : MonoBehaviour
         return currentAmmo;
     }
     
-    public void decreaseMagazin()
+    public int getAmmoForMagazin(int ammo)
     {
+        int result = -1;
+        
+        if (currentAmmo <= 0)
+        {
+            result = 0;
+        }
+        
+        if (currentAmmo - ammo <= 0)
+        {
+            result = currentAmmo;
+            currentAmmo = 0;
+        }
+        
+        if (currentAmmo - ammo > 0)
+        {
+            currentAmmo -= ammo;
+            result = ammo;
+        }
+
+        playerController.playerStats.setAmmoValue(currentAmmo);
+        return result;
     }
 
     public void changeAmmo(int ammoDelta)
@@ -36,12 +54,14 @@ public class PlayerAmmoController : MonoBehaviour
         else if (result > maxAmmo)
         {
             currentAmmo = maxAmmo;
-            player.setUserMessage("");
+            playerController.setUserMessage("");
         }
         else
         {
             currentAmmo = result;
-            player.setUserMessage("");
+            playerController.setUserMessage("");
         }
+        
+        playerController.playerStats.setAmmoValue(currentAmmo);
     }
 }

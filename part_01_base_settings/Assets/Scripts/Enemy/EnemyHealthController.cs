@@ -24,8 +24,20 @@ public class EnemyHealthController : MonoBehaviour
         {
             currentHealth = 0;
             //Debug.Log("Enemy is dead");
-            player.expaController.updateExpa(expaValue);
-            Debug.Log("Player got Expa: " + expaValue);
+            if (player != null)
+            {
+                Debug.Log("Player is not null");
+                if (player.expaController != null)
+                {
+                    Debug.Log("Player.expaController is not null");
+                    Debug.Log("Player got Expa: " + expaValue);
+                    player.expaController.updateExpa(expaValue);
+                }
+                else
+                {
+                    Debug.Log("Player.expaController is null");
+                }
+            }
             
             OnHealthPctChanged(0f);
             enemyController.enemyDeath();

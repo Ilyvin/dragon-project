@@ -11,30 +11,35 @@ public class PlayerStats : MonoBehaviour
     public Text magazinAmmoValue;
     public Text expaValue;
     public Text userMessage;
-    private PlayerHealthController healthController;
-    private PlayerAmmoController ammoController;
-    private GunController gunController;
-    private PlayerExperienceController expaController;
+    public Image weaponIcon;
 
-    void Start()
+    public void setMagazinAmmoValue(int value)
     {
-        healthController = gameObject.GetComponent<PlayerHealthController>();
-        ammoController = gameObject.GetComponent<PlayerAmmoController>();
-        gunController = gameObject.GetComponent<PlayerController>().gunController;
-        expaController = gameObject.GetComponent<PlayerExperienceController>();
+        magazinAmmoValue.GetComponent<Text>().text = value.ToString();
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    public void setAmmoValue(int value)
     {
-        hpValue.GetComponent<Text>().text = healthController.currentHealth.ToString();
-        ammoValue.GetComponent<Text>().text = ammoController.currentAmmo.ToString();
-        magazinAmmoValue.GetComponent<Text>().text = gunController.currentMagazinAmmo.ToString();
-        expaValue.GetComponent<Text>().text = expaController.currentExpa.ToString();
+        ammoValue.GetComponent<Text>().text = value.ToString();
+    }
+
+    public void setExpaValue(int value)
+    {
+        expaValue.GetComponent<Text>().text = value.ToString();
+    }
+
+    public void setWeaponIcon(Sprite icon)
+    {
+        weaponIcon.GetComponent<Image>().sprite = icon;
     }
 
     public void setUserMessage(String msg)
     {
         userMessage.GetComponent<Text>().text = msg;
+    }
+
+    public void setHealthValue(float value)
+    {
+        hpValue.GetComponent<Text>().text = value.ToString();
     }
 }

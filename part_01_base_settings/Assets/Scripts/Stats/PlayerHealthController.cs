@@ -6,12 +6,12 @@ public class PlayerHealthController : MonoBehaviour
 {
     public float maxHealth = 100f;
     public float currentHealth;
-    public PlayerController player;
+    private PlayerController playerController;
 
     void Start()
     {
         currentHealth = maxHealth;
-        player = gameObject.GetComponent<PlayerController>();
+        playerController = gameObject.GetComponent<PlayerController>();
         
     }
 
@@ -22,9 +22,9 @@ public class PlayerHealthController : MonoBehaviour
         if (resultHealth <= 0)
         {
             currentHealth = 0;
-            player.playerStats.setUserMessage("Чувак, ты оглушён");
+            playerController.playerStats.setUserMessage("Чувак, ты оглушён");
             //Debug.Log("****************Чувак, ты оглушён");
-            player.playerRespawnNeeded = true;
+            playerController.playerRespawnNeeded = true;
         }
         else if (resultHealth > maxHealth)
         {
@@ -35,6 +35,7 @@ public class PlayerHealthController : MonoBehaviour
             currentHealth = resultHealth;
         }
         
+        playerController.playerStats.setHealthValue(currentHealth);
     }
     
 }

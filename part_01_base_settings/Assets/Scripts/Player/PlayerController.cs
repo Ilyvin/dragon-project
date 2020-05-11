@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     // COMPONENTS
     private CharacterController characterController;
     public GunController gunController;
+    public NewGunController newGunController;
     public GameObject respawnPoint;
     public PlayerHealthController healthController;
     public PlayerAmmoController ammoController;
@@ -39,18 +40,24 @@ public class PlayerController : MonoBehaviour
         transform.position = position;
         healthController.currentHealth = data.currentHealth;
         ammoController.currentAmmo = data.currentAmmo;
-        gunController.currentMagazinAmmo = data.currentMagazinAmmo;
+        //gunController.currentMagazinAmmo = data.currentMagazinAmmo;
+        newGunController.currentMagazinAmmo = data.currentMagazinAmmo;
         expaController.currentExpa = data.currentExpa;
     }
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        
+        //changeWeaponContoller = gameObject.GetComponentInChildren<ChangeWeaponContoller>();
+        //changeWeaponContoller.playerController = this;
+        //changeWeaponContoller.initWeaponList();
+        
         camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         //respawnPoint = GameObject.FindGameObjectWithTag("Respawn");
         healthController = gameObject.GetComponent<PlayerHealthController>();
         ammoController = gameObject.GetComponent<PlayerAmmoController>();
-        ammoController.player = this;
+        //ammoController.playerController = this;
         Debug.Log("[PlayerController] ammoController = " + ammoController);
         Debug.Log("[PlayerController] ammoController.currentAmmo = " + ammoController.currentAmmo);
         expaController = gameObject.GetComponent<PlayerExperienceController>();
@@ -59,11 +66,13 @@ public class PlayerController : MonoBehaviour
         Debug.Log("[PlayerController] playerStats.setUserMessage - Ну поехали");
         mainMenu = GameObject.FindGameObjectWithTag("MainMenuCanvas").GetComponent<MainMenu>();
         soundController = gameObject.GetComponent<PlayerSoundController>();
-        gunController = gameObject.GetComponentInChildren<GunController>();
+        //gunController = changeWeaponContoller.getActualGunController();
+        newGunController = gameObject.GetComponentInChildren<NewGunController>();
         playerRespawnNeeded = true;
         
         //first fill
-        gunController.fillMagazin();
+        //gunController.fillMagazin();
+        //newGunController.fillMagazin();
         Debug.Log("[PlayerController] End of Start");
     }
 
@@ -85,7 +94,7 @@ public class PlayerController : MonoBehaviour
         if (!mainMenu.isGamePaused())
         {
             playerMovementControls();
-            playerAttackControls();
+            //playerAttackControls();
             savingSystemControls();
             
             if (Input.GetKeyDown(KeyCode.N))
@@ -99,6 +108,8 @@ public class PlayerController : MonoBehaviour
                 respawnPlayer();
                 Debug.Log("*************[PlayerController] RESPAWN");
                 playerRespawnNeeded = false;
+                
+                //changeWeaponContoller.initWeaponList();
             }
         }
     }

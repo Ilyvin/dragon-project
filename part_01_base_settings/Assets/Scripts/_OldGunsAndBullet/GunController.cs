@@ -7,12 +7,13 @@ public class GunController : MonoBehaviour
     private bool isFiring;
     private bool shootingProcessStarted = false;
     private PlayerController playerController;
+    private PlayerAmmoController ammoController;
     public BulletController bulletPrefab;
     public float bulletSpeed = 50f;
     public float timeBetweenShots = 0.5f;
-    public bool isArmorPiercing = false;//бронебойный
-    public int enemiesPiercingLimit = 1;//количество врагов, которых можно убить подряд насквозь
-    
+    public bool isArmorPiercing = false; //бронебойный
+    public int enemiesPiercingLimit = 1; //количество врагов, которых можно убить подряд насквозь
+
     public int magazinLimit = 10;
     public int currentMagazinAmmo = 0;
     public bool magazinFilled = false;
@@ -28,12 +29,15 @@ public class GunController : MonoBehaviour
     public AudioClip noAmmoSound;
     private AudioSource audioSource;
 
-    private void Start()
+    public GameObject model;
+
+    private void Awake()
     {
         playerController = gameObject.GetComponentInParent<PlayerController>();
         Debug.Log("playerController = " + playerController);
         audioSource = gameObject.GetComponent<AudioSource>();
         audioSource.clip = shotSound;
+        ammoController = playerController.ammoController;
 
         //fillMagazin();
     }
@@ -46,12 +50,25 @@ public class GunController : MonoBehaviour
         {
             StopCoroutine(shootBulletCoroutine);
         }
+
         shootingProcessStarted = false;
 
         if (currentMagazinAmmo < magazinLimit)
         {
-            Debug.Log("[GunController] playerController.ammoController.currentAmmo = " + playerController.ammoController.currentAmmo);
-            Debug.Log("[GunController] playerController.ammoController.getCurrentAmmo() = " + playerController.ammoController.getCurrentAmmo());
+            if (playerController == null)
+            {
+                playerController = gameObject.GetComponentInParent<PlayerController>();
+            }
+            
+            if (ammoController == null)
+            {
+                ammoController = playerController.gameObject.GetComponent<PlayerAmmoController>();
+            }
+            
+            Debug.Log("[GunController] playerController.ammoController.currentAmmo = " +
+                      ammoController.currentAmmo);
+            Debug.Log("[GunController] playerController.ammoController.getCurrentAmmo() = " +
+                      ammoController.getCurrentAmmo());
             int currentAmmo = playerController.ammoController.getCurrentAmmo();
             Debug.Log("currentAmmo = " + currentAmmo);
             if (currentAmmo > 0)
@@ -63,12 +80,12 @@ public class GunController : MonoBehaviour
                 if (currentAmmo > requiredAmmo)
                 {
                     currentMagazinAmmo = magazinLimit;
-                    playerController.ammoController.changeAmmo(-magazinLimit);
+                    ammoController.changeAmmo(-magazinLimit);
                 }
                 else
                 {
                     currentMagazinAmmo = currentAmmo;
-                    playerController.ammoController.changeAmmo(-currentAmmo);
+                    ammoController.changeAmmo(-currentAmmo);
                 }
 
                 //Debug.Log("Line 64");
@@ -110,7 +127,7 @@ public class GunController : MonoBehaviour
         magazinFilled = true;
     }
 
-    public void changeMagazinAmmo(int ammoDelta)
+    private void changeMagazinAmmo(int ammoDelta)
     {
         //Debug.Log("Line 105 changeMagazinAmmo");
 

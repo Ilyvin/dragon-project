@@ -28,13 +28,13 @@ public class AmmoItemController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("AmmoItem");
+        //Debug.Log("AmmoItem");
         if (other.gameObject.tag == "Player")
         {
             audioSource.Play();
-            Debug.Log("Player's ammo was extended: " + hillValue + " items");
+            //Debug.Log("Player's ammo was extended: " + hillValue + " items");
             other.gameObject.GetComponent<PlayerAmmoController>().changeAmmo(hillValue);
-            other.gameObject.GetComponent<PlayerController>().gunController.fillMagazinIfEmpty();
+            other.gameObject.GetComponent<PlayerController>().newGunController.fillMagazinIfEmpty();
             
             //Destroy(gameObject);
             hideItemObject();
