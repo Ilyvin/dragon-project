@@ -54,7 +54,7 @@ public class NewGunController : MonoBehaviour
 
     void Start()
     {
-        playerController = gameObject.GetComponentInParent<PlayerController>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         audioSource = gameObject.GetComponent<AudioSource>();
     }
 

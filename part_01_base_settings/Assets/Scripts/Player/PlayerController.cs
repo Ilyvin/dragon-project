@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController characterController;
     public GunController gunController;
     public NewGunController newGunController;
+    public ChangeWeaponContoller changeWeaponController;
     public GameObject respawnPoint;
     public PlayerHealthController healthController;
     public PlayerAmmoController ammoController;
@@ -68,6 +69,7 @@ public class PlayerController : MonoBehaviour
         soundController = gameObject.GetComponent<PlayerSoundController>();
         //gunController = changeWeaponContoller.getActualGunController();
         newGunController = gameObject.GetComponentInChildren<NewGunController>();
+        changeWeaponController = gameObject.GetComponentInChildren<ChangeWeaponContoller>();
         playerRespawnNeeded = true;
         
         //first fill

@@ -6,19 +6,21 @@ using UnityEngine;
 public class ChangeWeaponContoller : MonoBehaviour
 {
     public int selectedWeapon = 0;
+    public HashSet<String> weaponTypes = new HashSet<String>();
 
     void Start()
     {
+        initWeaponTypes();
         SelectWeapon();
     }
 
     void Update()
     {
         int previousSelectedWeapon = selectedWeapon;
-        
+
         if (Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
-			Debug.Log("Input.Mouse ScrollWheel > 0f, selectedWeapon=" + selectedWeapon);
+            Debug.Log("Input.Mouse ScrollWheel > 0f, selectedWeapon=" + selectedWeapon);
             if (selectedWeapon >= transform.childCount - 1)
             {
                 selectedWeapon = 0;
@@ -28,10 +30,10 @@ public class ChangeWeaponContoller : MonoBehaviour
                 selectedWeapon++;
             }
         }
-        
+
         if (Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
-			Debug.Log("Input.Mouse ScrollWheel < 0f, selectedWeapon=" + selectedWeapon);
+            Debug.Log("Input.Mouse ScrollWheel < 0f, selectedWeapon=" + selectedWeapon);
             if (selectedWeapon <= 0)
             {
                 selectedWeapon = transform.childCount - 1;
@@ -47,21 +49,21 @@ public class ChangeWeaponContoller : MonoBehaviour
             selectedWeapon = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2) && transform.childCount >= 2 )
+        if (Input.GetKeyDown(KeyCode.Alpha2) && transform.childCount >= 2)
         {
             selectedWeapon = 1;
         }
-        
-        if (Input.GetKeyDown(KeyCode.Alpha3) && transform.childCount >= 3 )
+
+        if (Input.GetKeyDown(KeyCode.Alpha3) && transform.childCount >= 3)
         {
             selectedWeapon = 2;
         }
-        
-        if (Input.GetKeyDown(KeyCode.Alpha4) && transform.childCount >= 4 )
+
+        if (Input.GetKeyDown(KeyCode.Alpha4) && transform.childCount >= 4)
         {
             selectedWeapon = 3;
         }
-        
+
         if (previousSelectedWeapon != selectedWeapon)
         {
             SelectWeapon();
@@ -70,7 +72,7 @@ public class ChangeWeaponContoller : MonoBehaviour
 
     private void SelectWeapon()
     {
-		Debug.Log("SelectWeapon()");
+        Debug.Log("SelectWeapon()");
         int i = 0;
         foreach (Transform weapon in transform)
         {
@@ -87,6 +89,37 @@ public class ChangeWeaponContoller : MonoBehaviour
         }
     }
 
+    private void initWeaponTypes()
+    {
+        foreach (Transform weapon in transform)
+        {
+            weaponTypes.Add(weapon.gameObject.GetComponent<NewGunController>().weaponType.ToString());
+        }
+    }
+
+    public void addNewWeapon(GameObject weaponPrefab)
+    {
+        Debug.Log("addNewWeapon");
+        
+        if (weaponPrefab != null && weaponPrefab.gameObject.GetComponent<NewGunController>() != null)
+        {
+            String wt = weaponPrefab.gameObject.GetComponent<NewGunController>().weaponType.ToString();
+
+            foreach (String elem in weaponTypes)
+            {
+                Debug.Log("elem = " + elem);
+            }
+            
+            if (!weaponTypes.Contains(wt))
+            {
+                GameObject newWeapon = Instantiate(weaponPrefab, transform.position, transform.rotation);
+                newWeapon.transform.parent = transform;
+                weaponTypes.Add(wt);
+
+                SelectWeapon();
+            }
+        }
+    }
 
     /*public PlayerController playerController;
     public WeaponType activeWeaponType = WeaponType.VINTOVKA;
