@@ -3,15 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public enum GunType
-{
-    AUTOMAT,
-    AK74,
-    PISTOLET,
-    VINTOVKA
-}
-
 public class NewGunController : MonoBehaviour
 {
     public WeaponType weaponType;
@@ -52,6 +43,9 @@ public class NewGunController : MonoBehaviour
     private float fireRate = 15f;
     private float nextTimeToFire = 0f;
 
+    public float courseDeviationRandomRange = 0.1f;
+    public float speedDeviationRandomRange = 0.1f;
+    public int shotgunBulletNumber = 10;
     void Start()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -144,13 +138,42 @@ public class NewGunController : MonoBehaviour
             audioSource.clip = shotSound;
             audioSource.Play();
 
-            BulletController newBullet =
-                Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-            newBullet.speed = bulletSpeed;
-            newBullet.setDamage(damage);
-            newBullet.setIsArmorPiercing(isArmorPiercing);
-            newBullet.setEnemiesPiercingLimit(enemiesPiercingLimit);
-            newBullet.setPlayerController(playerController);
+            if (weaponType == WeaponType.SHOTGUN)
+            {
+                for (int i = 0; i < shotgunBulletNumber; i++)
+                {
+                    Quaternion rotation = new Quaternion(
+                        firePoint.rotation.x + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange),
+                        firePoint.rotation.y + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange),
+                        firePoint.rotation.z + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange),
+                        firePoint.rotation.w);
+                    BulletController newBullet = Instantiate(bulletPrefab, firePoint.position, rotation);
+                    /*Debug.Log("Shotgun bullet rotation: " + firePoint.rotation.ToString());
+                    Debug.Log("Shotgun bullet rotation: x=" + firePoint.rotation.x + ", y=" + firePoint.rotation.y + ", z=" + firePoint.rotation.z + ", w=" + firePoint.rotation.w);
+
+                    Debug.Log("Shotgun bullet rotation with rand: " +
+                              "x=" + firePoint.rotation.x + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange) + ", " +
+                              "y=" + firePoint.rotation.y + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange) + ", " +
+                              "z=" + firePoint.rotation.z + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange) + ", " +
+                              "w=" + firePoint.rotation.w);*/
+                    
+                    newBullet.speed = bulletSpeed;
+                    newBullet.setDamage(damage);
+                    newBullet.setIsArmorPiercing(isArmorPiercing);
+                    newBullet.setEnemiesPiercingLimit(enemiesPiercingLimit);
+                    newBullet.setPlayerController(playerController);
+                }
+            }
+            else
+            {
+                BulletController newBullet =
+                    Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+                newBullet.speed = bulletSpeed;
+                newBullet.setDamage(damage);
+                newBullet.setIsArmorPiercing(isArmorPiercing);
+                newBullet.setEnemiesPiercingLimit(enemiesPiercingLimit);
+                newBullet.setPlayerController(playerController);
+            }
 
             updateMagazinAmmo(-1);
         }

@@ -7,7 +7,8 @@ public enum WeaponType
     AUTOMAT,
     AK74,
     PISTOLET,
-    VINTOVKA
+    VINTOVKA,
+    SHOTGUN
 }
 public class GunActivator : MonoBehaviour
 {

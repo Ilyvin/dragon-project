@@ -10,7 +10,7 @@ public class BulletController : MonoBehaviour
     public PlayerController player;
     private float lifetime = 10f;
     private float damage;
-    private bool isArmorPiercing; //бронебойный
+    private bool isArmorPiercing = false; //бронебойный
     private int enemiesPiercingCounter;//счётчик убитых насквозь врагов
     private int enemiesPiercingLimit;//количество врагов, которых можно убить подряд насквозь
     
