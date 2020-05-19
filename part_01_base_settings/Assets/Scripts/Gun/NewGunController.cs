@@ -36,7 +36,8 @@ public class NewGunController : MonoBehaviour
     private AudioSource audioSource;
 
     public GameObject model; //информация из GunSettings
-    public Sprite weaponIcon; 
+
+    public Sprite weaponIcon;
     //--------------------------------
 
     public bool isSingleShooting = false;
@@ -46,6 +47,7 @@ public class NewGunController : MonoBehaviour
     public float courseDeviationRandomRange = 0.1f;
     public float speedDeviationRandomRange = 0.1f;
     public int shotgunBulletNumber = 10;
+
     void Start()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -156,13 +158,23 @@ public class NewGunController : MonoBehaviour
                               "y=" + firePoint.rotation.y + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange) + ", " +
                               "z=" + firePoint.rotation.z + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange) + ", " +
                               "w=" + firePoint.rotation.w);*/
-                    
+
                     newBullet.speed = bulletSpeed;
                     newBullet.setDamage(damage);
                     newBullet.setIsArmorPiercing(isArmorPiercing);
                     newBullet.setEnemiesPiercingLimit(enemiesPiercingLimit);
                     newBullet.setPlayerController(playerController);
                 }
+            }
+            else if (weaponType == WeaponType.BAZUKA)
+            {
+                BulletController newBullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+                newBullet.setBulletType(BulletType.BAZUKA_ROCKET);
+                newBullet.speed = bulletSpeed;
+                newBullet.setDamage(damage);
+                newBullet.setIsArmorPiercing(isArmorPiercing);
+                newBullet.setEnemiesPiercingLimit(enemiesPiercingLimit);
+                newBullet.setPlayerController(playerController);
             }
             else
             {

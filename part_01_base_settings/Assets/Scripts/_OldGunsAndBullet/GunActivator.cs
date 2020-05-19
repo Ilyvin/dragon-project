@@ -8,7 +8,13 @@ public enum WeaponType
     AK74,
     PISTOLET,
     VINTOVKA,
-    SHOTGUN
+    SHOTGUN,
+    BAZUKA
+}
+public enum BulletType
+{
+    BAZUKA_ROCKET,
+    BULLET
 }
 public class GunActivator : MonoBehaviour
 {
