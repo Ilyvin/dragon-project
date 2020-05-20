@@ -78,7 +78,7 @@ public class NewGunController : MonoBehaviour
                 {
                     if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire)
                     {
-                        Shoot();
+                        Shoot(1);
                     }
                 }
             }
@@ -89,7 +89,7 @@ public class NewGunController : MonoBehaviour
                     //это метод для стрельбы из пистолета - одиночными.
                     if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire)
                     {
-                        Shoot();
+                        Shoot(1);
                     }
                 }
                 else
@@ -97,7 +97,13 @@ public class NewGunController : MonoBehaviour
                     //это метод для стрельбы из автомата очередью.
                     if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
                     {
-                        Shoot();
+                        Shoot(1);
+                    }
+                    
+                    //это метод для двойного выстрела.
+                    if (Input.GetButton("Fire2") && Time.time >= nextTimeToFire)
+                    {
+                        Shoot(2);
                     }
                 }
             }
@@ -125,8 +131,8 @@ public class NewGunController : MonoBehaviour
         currentMagazinAmmo += deltaAmmo;
         playerController.playerStats.setMagazinAmmoValue(currentMagazinAmmo);
     }
-
-    public void Shoot()
+    
+    public void Shoot(int BulletsNumber)
     {
         nextTimeToFire = Time.time + timeBetweenShots;
 
@@ -142,28 +148,34 @@ public class NewGunController : MonoBehaviour
 
             if (weaponType == WeaponType.SHOTGUN)
             {
-                for (int i = 0; i < shotgunBulletNumber; i++)
+                for (int j = 0; j < BulletsNumber; j++)
                 {
-                    Quaternion rotation = new Quaternion(
-                        firePoint.rotation.x + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange),
-                        firePoint.rotation.y + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange),
-                        firePoint.rotation.z + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange),
-                        firePoint.rotation.w);
-                    BulletController newBullet = Instantiate(bulletPrefab, firePoint.position, rotation);
-                    /*Debug.Log("Shotgun bullet rotation: " + firePoint.rotation.ToString());
-                    Debug.Log("Shotgun bullet rotation: x=" + firePoint.rotation.x + ", y=" + firePoint.rotation.y + ", z=" + firePoint.rotation.z + ", w=" + firePoint.rotation.w);
+                    for (int i = 0; i < shotgunBulletNumber; i++)
+                    {
+                        Quaternion rotation = new Quaternion(
+                            firePoint.rotation.x +
+                            Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange),
+                            firePoint.rotation.y +
+                            Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange),
+                            firePoint.rotation.z +
+                            Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange),
+                            firePoint.rotation.w);
+                        BulletController newBullet = Instantiate(bulletPrefab, firePoint.position, rotation);
+                        /*Debug.Log("Shotgun bullet rotation: " + firePoint.rotation.ToString());
+                        Debug.Log("Shotgun bullet rotation: x=" + firePoint.rotation.x + ", y=" + firePoint.rotation.y + ", z=" + firePoint.rotation.z + ", w=" + firePoint.rotation.w);
+    
+                        Debug.Log("Shotgun bullet rotation with rand: " +
+                                  "x=" + firePoint.rotation.x + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange) + ", " +
+                                  "y=" + firePoint.rotation.y + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange) + ", " +
+                                  "z=" + firePoint.rotation.z + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange) + ", " +
+                                  "w=" + firePoint.rotation.w);*/
 
-                    Debug.Log("Shotgun bullet rotation with rand: " +
-                              "x=" + firePoint.rotation.x + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange) + ", " +
-                              "y=" + firePoint.rotation.y + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange) + ", " +
-                              "z=" + firePoint.rotation.z + Random.Range(-courseDeviationRandomRange, courseDeviationRandomRange) + ", " +
-                              "w=" + firePoint.rotation.w);*/
-
-                    newBullet.speed = bulletSpeed;
-                    newBullet.setDamage(damage);
-                    newBullet.setIsArmorPiercing(isArmorPiercing);
-                    newBullet.setEnemiesPiercingLimit(enemiesPiercingLimit);
-                    newBullet.setPlayerController(playerController);
+                        newBullet.speed = bulletSpeed;
+                        newBullet.setDamage(damage);
+                        newBullet.setIsArmorPiercing(isArmorPiercing);
+                        newBullet.setEnemiesPiercingLimit(enemiesPiercingLimit);
+                        newBullet.setPlayerController(playerController);
+                    }
                 }
             }
             else if (weaponType == WeaponType.BAZUKA)
@@ -187,7 +199,7 @@ public class NewGunController : MonoBehaviour
                 newBullet.setPlayerController(playerController);
             }
 
-            updateMagazinAmmo(-1);
+            updateMagazinAmmo(-BulletsNumber);
         }
     }
 

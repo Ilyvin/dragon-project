@@ -80,7 +80,12 @@ public class BulletController : MonoBehaviour
             //этот эффект надо будет потом использовать для того, чтобы типо того это был мега-скилл бронебойного выстрела.
             //но для обычных выстрелов этот режим должен быть недоступен и пуля должна исчезнуть при первом же попадении во врага.
 
-            if (gameController.violenceEnabled)
+            if (gameController == null)
+            {
+                Debug.LogError("!!! gameController == null");
+            }
+            
+            if (gameController != null && gameController.violenceEnabled)
             {
                 GameObject bulletHole = Instantiate(bulletBloodHolePrefab,
                     transform.position - transform.forward * bulletHolePositionOffset,
