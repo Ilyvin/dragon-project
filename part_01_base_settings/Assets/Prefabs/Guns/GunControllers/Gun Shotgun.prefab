@@ -122,7 +122,7 @@ MonoBehaviour:
   firePoint: {fileID: 6580334584724032565}
   damage: 10
   shotSound: {fileID: 8300000, guid: e9a0389898f35d445a4ed9c5b81090a4, type: 3}
-  ammoReloadSound: {fileID: 8300000, guid: 450146ce05a4c0049a96d6e2fc4a86c6, type: 3}
+  ammoReloadSound: {fileID: 8300000, guid: afcbefb59892f6b4d8511f559bbb0616, type: 3}
   noAmmoSound: {fileID: 8300000, guid: ea13495a5ac28b14e8a544716ee6fffb, type: 3}
   model: {fileID: 6580334584955935805}
   weaponIcon: {fileID: 21300000, guid: fa9d6c230eb5c334b891629875da0ae4, type: 3}
