@@ -128,6 +128,13 @@ public class PlayerController : MonoBehaviour
         rotatePlayerToMousePosition();
     }
 
+    public void moveToPosition(Vector3 position)
+    {
+        characterController.enabled = false;
+        characterController.transform.position = new Vector3(position.x, transform.position.y, position.z);
+        characterController.enabled = true;
+    }
+
     private void playStepSound()
     {
         if (new Vector3(characterController.velocity.x, 0, characterController.velocity.z).magnitude > 0.2f)
