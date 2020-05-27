@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerData
 {
 
-    public float currentHealth;
+    public int currentHealth;
     public int currentExpa;
     public int currentAmmo;
     public int currentMagazinAmmo;

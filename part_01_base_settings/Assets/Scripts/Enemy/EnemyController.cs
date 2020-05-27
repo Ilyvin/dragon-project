@@ -12,7 +12,7 @@ public class EnemyController : MonoBehaviour
     
     private IEnumerator attackingProcessCoroutine;
     private bool attackingProcessStarted = false;
-    public float damage = 5f;
+    public int damage = 5;
 
     public GameObject aliveModel;
     public GameObject deadModel;

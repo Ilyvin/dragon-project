@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MedicineItemController : MonoBehaviour
+public class BronikItemController : MonoBehaviour
 {
-    public int hillValue = 25;
-    public float respawnDelay = 5f;
     private AudioSource audioSource;
+    public float respawnDelay = 5f;
     public GameObject childModel;
-
-    private void Start()
+    
+    void Start()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
     }
-    
+
     private void hideItemObject()
     {
         childModel.SetActive(false);
@@ -33,7 +32,7 @@ public class MedicineItemController : MonoBehaviour
         {
             audioSource.Play();
             //Debug.Log("Player was hilled by: " + hillValue + " hp");
-            other.gameObject.GetComponent<PlayerHealthController>().changeHealth(hillValue);
+            other.gameObject.GetComponent<PlayerHealthController>().activateBronik(true);
 
             //Destroy(gameObject);
             
