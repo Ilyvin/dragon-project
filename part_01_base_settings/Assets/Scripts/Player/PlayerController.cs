@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public PlayerExperienceController expaController;
     public PlayerStats playerStats;
     public PlayerSoundController soundController;
+    public DoorKeysContainer doorKeysContainer;
     public MainMenu mainMenu;
 
     public float timeBetweenSteps = 0.3f;
@@ -70,6 +71,7 @@ public class PlayerController : MonoBehaviour
         //gunController = changeWeaponContoller.getActualGunController();
         newGunController = gameObject.GetComponentInChildren<NewGunController>();
         changeWeaponController = gameObject.GetComponentInChildren<ChangeWeaponContoller>();
+        doorKeysContainer = gameObject.GetComponent<DoorKeysContainer>();
         playerRespawnNeeded = true;
         
         //first fill

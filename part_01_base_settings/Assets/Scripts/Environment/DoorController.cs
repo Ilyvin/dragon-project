@@ -2,17 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum DoorKeyColor
+{
+    NO_COLOR,
+    RED,
+    GREEN,
+    BLUE
+}
 public class DoorController : MonoBehaviour
 {
     public Animator doorAnimator;
     private AudioSource audioSource;
     public AudioClip openSound;
     public AudioClip closeSound;
+    public DoorKeyColor doorKeyColor = DoorKeyColor.NO_COLOR;
+    private PlayerController player;
     void Start()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
         doorAnimator = gameObject.GetComponentInChildren<Animator>();
         doorAnimator.SetBool("closed", true);
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -26,11 +36,22 @@ public class DoorController : MonoBehaviour
         //Debug.Log("Door Open");
         if (other.gameObject.tag == "Player")
         {
-            if (doorAnimator != null)
+            if (DoorKeyColor.NO_COLOR.Equals(doorKeyColor))
             {
-                doorAnimator.SetBool("closed", false);
-                audioSource.clip = openSound;
-                audioSource.Play();
+                if (doorAnimator != null)
+                {
+                    doorAnimator.SetBool("closed", false);
+                    audioSource.clip = openSound;
+                    audioSource.Play();
+                }
+            }else
+            {
+                if (player.doorKeysContainer.containsKey(doorKeyColor))
+                {
+                    doorAnimator.SetBool("closed", false);
+                    audioSource.clip = openSound;
+                    audioSource.Play();
+                }
             }
         }
     }
