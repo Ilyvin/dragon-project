@@ -117,8 +117,9 @@ MonoBehaviour:
   speed: 4
   player: {fileID: 0}
   attackingDistance: 3
-  oneAttackTime: 3
+  oneAttackTime: 1.5
   damage: 5
+  enemyType: 0
   aliveModel: {fileID: 5355590128000557887}
   deadModel: {fileID: 1119603725}
   stepsSoundsArray:
@@ -581,6 +582,7 @@ MonoBehaviour:
   attackingDistance: 3
   oneAttackTime: 3
   damage: 5
+  enemyType: 0
   aliveModel: {fileID: 0}
   deadModel: {fileID: 0}
   stepsSoundsArray: []

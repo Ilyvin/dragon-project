@@ -2,6 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnemyType
+{
+    RECRUIT,
+    SOLDIER,
+    BRIGADIER,
+    ARCHER,
+    BOMBER
+}
+
 public class EnemyController : MonoBehaviour
 {
     private Rigidbody myRB;
@@ -9,10 +18,15 @@ public class EnemyController : MonoBehaviour
     public PlayerController player;
     public float attackingDistance = 3f;
     public float oneAttackTime = 3f;
-    
+
     private IEnumerator attackingProcessCoroutine;
     private bool attackingProcessStarted = false;
     public int damage = 5;
+    public EnemyType enemyType;
+    
+    public EnemyBulletController enemyBulletPrefab;
+    public Transform firePoint;
+    public float bulletSpeed = 10f;
 
     public GameObject aliveModel;
     public GameObject deadModel;
@@ -27,20 +41,20 @@ public class EnemyController : MonoBehaviour
     public float deathSoundVolume = 0.5f;
     public float attackSoundVolume = 0.5f;
     public float getDamageSoundVolume = 0.5f;
-    
+
     public float destroyDelay = 10f;
     private bool isDead = false;
-    
+
     public float timeBetweenSteps = 0.3f;
     public float timer = 0f;
-    
+
     void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         myRB = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
         attackingProcessCoroutine = attackingProcess(oneAttackTime);
-        
+
         aliveModel.SetActive(true);
         deadModel.SetActive(false);
     }
@@ -49,8 +63,9 @@ public class EnemyController : MonoBehaviour
     {
         if (!isDead)
         {
-            transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
-            
+            transform.LookAt(
+                new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
+
             if (Vector3.Distance(gameObject.transform.position, player.transform.position) > attackingDistance)
             {
                 moveToPlayer();
@@ -69,27 +84,30 @@ public class EnemyController : MonoBehaviour
 
     public void enemyDeath()
     {
+        StopCoroutine(attackingProcessCoroutine);
+        attackingProcessStarted = false;
+        
         aliveModel.SetActive(false);
         deadModel.SetActive(true);
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
         isDead = true;
-        
+
         AudioClip clip = deathSoundsArray[Random.Range(0, deathSoundsArray.Length)];
         audioSource.clip = clip;
         audioSource.volume = deathSoundVolume;
         audioSource.Play();
-        
+
         Invoke("destroyEnemy", destroyDelay);
     }
-    
-    
+
+
     private void playStepSound()
     {
         if (new Vector3(myRB.velocity.x, 0, myRB.velocity.z).magnitude > 0.2f)
         {
             timer += Time.deltaTime;
 
-            if(timer > timeBetweenSteps)
+            if (timer > timeBetweenSteps)
             {
                 timer = 0;
                 AudioClip clip = stepsSoundsArray[Random.Range(0, stepsSoundsArray.Length)];
@@ -107,7 +125,7 @@ public class EnemyController : MonoBehaviour
         audioSource.volume = getDamageSoundVolume;
         audioSource.Play();
     }
-    
+
     private void destroyEnemy()
     {
         Destroy(gameObject);
@@ -116,7 +134,7 @@ public class EnemyController : MonoBehaviour
     private void moveToPlayer()
     {
         myRB.velocity = transform.forward * speed;
-        
+
         StopCoroutine(attackingProcessCoroutine);
         attackingProcessStarted = false;
     }
@@ -141,8 +159,34 @@ public class EnemyController : MonoBehaviour
             audioSource.clip = clip;
             audioSource.volume = attackSoundVolume;
             audioSource.Play();
-            player.GetComponent<PlayerHealthController>().changeHealth(-damage);
+            performAttackAction();
             yield return new WaitForSeconds(waitTime);
         }
+    }
+
+    private void performAttackAction()
+    {
+        if (enemyType != null)
+        {
+            switch (enemyType)
+            {
+                case EnemyType.RECRUIT:
+                    Debug.Log("RECRUIT attack");
+                    player.GetComponent<PlayerHealthController>().changeHealth(-damage);
+                    break;
+                case EnemyType.ARCHER:
+                    Debug.Log("ARCHER attack");
+                    ShootArrow(player);
+                    break;
+            }
+        }
+    }
+
+    private void ShootArrow(PlayerController player)
+    {
+        EnemyBulletController newBullet =
+            Instantiate(enemyBulletPrefab, firePoint.position, firePoint.rotation);
+        newBullet.speed = bulletSpeed;
+        newBullet.setDamage(damage);
     }
 }
