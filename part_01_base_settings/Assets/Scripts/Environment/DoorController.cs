@@ -7,7 +7,9 @@ public enum DoorKeyColor
     NO_COLOR,
     RED,
     GREEN,
-    BLUE
+    BLUE,
+    YELLOW,
+    BLACK
 }
 public class DoorController : MonoBehaviour
 {
