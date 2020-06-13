@@ -368,7 +368,7 @@ MonoBehaviour:
   isArmorPiercing: 0
   enemiesPiercingLimit: 1
   firePoint: {fileID: 9140533794450879667}
-  damage: 100
+  damage: 110
   shotSound: {fileID: 8300000, guid: db24bb53350875342b5137d869862681, type: 3}
   ammoReloadSound: {fileID: 8300000, guid: 7827aa575edf7c14e93d0cd1a71ff900, type: 3}
   noAmmoSound: {fileID: 8300000, guid: ea13495a5ac28b14e8a544716ee6fffb, type: 3}

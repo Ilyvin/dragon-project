@@ -25,7 +25,7 @@ public class NewGunController : MonoBehaviour
 
 
     public Transform firePoint; //информация из GunSettings
-    public float damage = 25f; //информация из GunSettings
+    public int damage = 25; //информация из GunSettings
 
 
     private IEnumerator shootBulletCoroutine;

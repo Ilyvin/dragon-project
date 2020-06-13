@@ -11,6 +11,7 @@ TagManager:
   - MainMenuCanvas
   - EnemyRespawnBase
   - Wall
+  - Bochka
   layers:
   - Default
   - TransparentFX

@@ -9,7 +9,7 @@ public class BulletController : MonoBehaviour
     public float speed = 10f;
     public PlayerController player;
     private float lifetime = 10f;
-    private float damage;
+    private int damage;
     private bool isArmorPiercing = false; //бронебойный
     private int enemiesPiercingCounter; //счётчик убитых насквозь врагов
     private int enemiesPiercingLimit; //количество врагов, которых можно убить подряд насквозь
@@ -44,7 +44,7 @@ public class BulletController : MonoBehaviour
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
-    public void setDamage(float damage)
+    public void setDamage(int damage)
     {
         this.damage = damage;
     }
@@ -84,7 +84,7 @@ public class BulletController : MonoBehaviour
             {
                 Debug.LogError("!!! gameController == null");
             }
-            
+
             if (gameController != null && gameController.violenceEnabled)
             {
                 GameObject bulletHole = Instantiate(bulletBloodHolePrefab,
@@ -169,7 +169,37 @@ public class BulletController : MonoBehaviour
 
             Destroy(gameObject);
         }
+        else if (other.gameObject.tag == "Bochka")
+        {
+            Debug.Log("Bullet met Bochka");
+            BochkaController bochkaController = other.gameObject.GetComponent<BochkaController>();
+            bochkaController.changeHealth(-damage, player);
+            
+            if (bulletType == BulletType.BAZUKA_ROCKET)
+            {
+                instantiateExplosionEffect();
+            }
+            
+            Destroy(gameObject);
+        }
     }
+
+    /*void OnTriggerEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Bochka")
+        {
+            Debug.Log("Bullet met trigger Bochka");
+            BochkaController bochkaController = other.gameObject.GetComponent<BochkaController>();
+            bochkaController.changeHealth(-damage);
+            
+            if (bulletType == BulletType.BAZUKA_ROCKET)
+            {
+                instantiateExplosionEffect();
+            }
+            
+            Destroy(gameObject);
+        }
+    }*/
 
     private void instantiateExplosionEffect()
     {

@@ -21,7 +21,7 @@ public class GunController : MonoBehaviour
     private int bulletCounter;
 
     public Transform firePoint;
-    public float damage = 25f;
+    public int damage = 25;
     private IEnumerator shootBulletCoroutine;
 
     public AudioClip shotSound;

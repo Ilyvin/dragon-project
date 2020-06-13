@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class EnemyHealthController : MonoBehaviour
 {
-    public float maxHealth = 100f;
+    public int maxHealth = 100;
     public int expaValue = 10;
-    public float currentHealth;
+    public int currentHealth;
     public event Action<float> OnHealthPctChanged = delegate { };
     private EnemyController enemyController;
     void Start()
@@ -16,9 +16,9 @@ public class EnemyHealthController : MonoBehaviour
         enemyController = gameObject.GetComponent<EnemyController>();
     }
 
-    public void changeHealth(float healthDelta, PlayerController player)
+    public void changeHealth(int healthDelta, PlayerController player)
     {
-        float resultHealth = currentHealth + healthDelta;
+        int resultHealth = currentHealth + healthDelta;
         
         if (resultHealth <= 0)
         {
@@ -26,16 +26,16 @@ public class EnemyHealthController : MonoBehaviour
             //Debug.Log("Enemy is dead");
             if (player != null)
             {
-                Debug.Log("Player is not null");
+                //Debug.Log("Player is not null");
                 if (player.expaController != null)
                 {
-                    Debug.Log("Player.expaController is not null");
-                    Debug.Log("Player got Expa: " + expaValue);
+                    //Debug.Log("Player.expaController is not null");
+                    //Debug.Log("Player got Expa: " + expaValue);
                     player.expaController.updateExpa(expaValue);
                 }
                 else
                 {
-                    Debug.Log("Player.expaController is null");
+                    //Debug.Log("Player.expaController is null");
                 }
             }
             

@@ -41,11 +41,11 @@ public class EnemyBulletController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("EnemyBullet met collision: " + other);
+        //Debug.Log("EnemyBullet met collision: " + other);
 
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("EnemyBullet met Player");
+            //Debug.Log("EnemyBullet met Player");
             
             other.gameObject.GetComponent<PlayerHealthController>().changeHealth(-damage);
 
@@ -102,7 +102,7 @@ public class EnemyBulletController : MonoBehaviour
         }
         else if (other.gameObject.tag == "Wall")
         {
-            Debug.Log("Bullet met Wall");
+            //Debug.Log("Bullet met Wall");
             GameObject bulletHole = Instantiate(bulletWallHolePrefab,
                 transform.position - transform.forward * bulletHolePositionOffset, transform.rotation);
             bulletHole.transform.parent = other.transform;
