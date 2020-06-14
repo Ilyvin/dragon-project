@@ -12,13 +12,13 @@ public class BochkaController : MonoBehaviour
     public float destroyTimeDelay = 2f;
     public GameObject aliveModel;
     public GameObject deadModel;
-    public GameObject damageArea;
+    private bool bochkaIsDestroyed = false;
     
     private AudioSource audioSource;
     public AudioClip getDamageSound;
-    public AudioClip destroySound;
+    //public AudioClip destroySound;
 
-    public GameObject bochkaExplosionEffect;
+    public GameObject normalExplosionEffect;
     private bool isExplosed = false;
     
     private PlayerController player;
@@ -52,30 +52,32 @@ public class BochkaController : MonoBehaviour
 
     private void destroyBochka()
     {
-        gameObject.GetComponent<CapsuleCollider>().enabled = false;
-        audioSource.clip = destroySound;
-        audioSource.Play();
+        if (!bochkaIsDestroyed)
+        {
+            bochkaIsDestroyed = true;
+            gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            //audioSource.clip = destroySound;
+            //audioSource.Play();
 
-        isExplosed = true;
-        
-        instantiateExplosionEffect();
+            //isExplosed = true;
 
-        //setDamageByRadius();
-        
-        aliveModel.SetActive(false);
-        deadModel.SetActive(true);
-        damageArea.SetActive(true);
-        
-        Destroy(gameObject, destroyTimeDelay);
+            instantiateExplosionEffect();
+
+            //setDamageByRadius();
+
+            aliveModel.SetActive(false);
+            deadModel.SetActive(true);
+            //damageArea.SetActive(true);
+
+            Destroy(gameObject, destroyTimeDelay);
+        }
+        else
+        {
+            Debug.Log("Another Attempt to destroy Bochka");
+        }
     }
 
-    /*private void setDamageByRadius()
-    {
-        //TODO
-    }*/
-
-
-    void OnCollisionEnter(Collision other)
+    /*void OnCollisionEnter(Collision other)
     {
         if (isExplosed)
         {
@@ -96,11 +98,15 @@ public class BochkaController : MonoBehaviour
                 other.gameObject.GetComponent<PlayerHealthController>().changeHealth(-damage);
             }
         }
-    }
+    }*/
 
     private void instantiateExplosionEffect()
     {
-        GameObject obj = Instantiate(bochkaExplosionEffect, transform.position, transform.rotation);
+        GameObject obj = Instantiate(normalExplosionEffect, transform.position, transform.rotation);
+        obj.GetComponent<ExplosionController>().setDamage(damage);
+        obj.GetComponent<ExplosionController>().setPlayer(player);
+        
+        //obj.explosion();
         Destroy(obj, 1.5f);
     }
 }

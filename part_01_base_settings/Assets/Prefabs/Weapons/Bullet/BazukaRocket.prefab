@@ -192,7 +192,7 @@ MonoBehaviour:
     type: 3}
   enemyBloodPuddlePrefab: {fileID: 4445853726062538220, guid: fb511ad0514f6ac49bda27e4efafdb4c,
     type: 3}
-  bazukaRocketExplosionEffect: {fileID: 1121192042590650, guid: 1a47824c1decdcd46a9024501510cd7a,
+  bazukaRocketExplosionPrefab: {fileID: 4916419724099959972, guid: 3c78bfbf6c7f075439137508ce2ea5e2,
     type: 3}
   damageArea: {fileID: 2458375026166897170}
 --- !u!135 &6822210108503591711

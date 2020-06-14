@@ -22,7 +22,7 @@ public class BulletController : MonoBehaviour
     private GameController gameController;
     private BulletType bulletType = BulletType.BULLET;
 
-    public GameObject bazukaRocketExplosionEffect;
+    public GameObject bazukaRocketExplosionPrefab;
     public GameObject damageArea;
     
     private bool isExplosed = false;
@@ -67,7 +67,7 @@ public class BulletController : MonoBehaviour
         this.enemiesPiercingLimit = enemiesPiercingLimit;
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (isExplosed)
         {
@@ -95,7 +95,7 @@ public class BulletController : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     void OnCollisionEnter(Collision other)
     {
@@ -103,9 +103,10 @@ public class BulletController : MonoBehaviour
 
         if (!isExplosed)
         {
-            Debug.Log("BULLET is NOT exposed!");
+            //Debug.Log("BULLET is NOT exposed!");
             if (other.gameObject.tag == "Enemy")
             {
+                Debug.Log("Bullet met Enemy: " + other);
                 other.gameObject.GetComponent<EnemyHealthController>().changeHealth(-damage, player);
                 //щас сделано так, что пуля летит сквозь всех врагов, не останавливаясь.
                 //этот эффект надо будет потом использовать для того, чтобы типо того это был мега-скилл бронебойного выстрела.
@@ -192,7 +193,7 @@ public class BulletController : MonoBehaviour
             }
             else if (other.gameObject.tag == "Wall")
             {
-                //Debug.Log("Bullet met Wall");
+                Debug.Log("Bullet met Wall");
                 GameObject bulletHole = Instantiate(bulletWallHolePrefab,
                     transform.position - transform.forward * bulletHolePositionOffset, transform.rotation);
                 bulletHole.transform.parent = other.transform;
@@ -208,7 +209,7 @@ public class BulletController : MonoBehaviour
             }
             else if (other.gameObject.tag == "Bochka")
             {
-                //Debug.Log("Bullet met Bochka");
+                Debug.Log("Bullet met Bochka");
                 BochkaController bochkaController = other.gameObject.GetComponent<BochkaController>();
                 bochkaController.changeHealth(-damage, player);
 
@@ -222,41 +223,16 @@ public class BulletController : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            /*Debug.Log("BULLET is EXPLODED!");
-            if (bulletType == BulletType.BAZUKA_ROCKET)
-            {
-                Debug.Log("BULLET is EXPLODED! - IT's BAZUKA");
-                Debug.Log("BULLET is EXPLODED! - met object: " + other.gameObject.tag);
-
-                if (other.gameObject.tag == "Enemy")
-                {
-                    Debug.Log("BULLET BAZUKA has been destroyed and met Enemy: " + other);
-                    other.gameObject.GetComponent<EnemyHealthController>().changeHealth(-damage, player);
-                }
-                else if (other.gameObject.tag == "Bochka")
-                {
-                    Debug.Log("BULLET BAZUKA has been destroyed and met other Bochka: " + other);
-                    BochkaController bochkaController = other.gameObject.GetComponent<BochkaController>();
-                    bochkaController.changeHealth(-damage, player);
-                }
-                else if (other.gameObject.tag == "Player")
-                {
-                    Debug.Log("BULLET BAZUKA  has been destroyed and met Player: " + other);
-                    other.gameObject.GetComponent<PlayerHealthController>().changeHealth(-damage);
-                }
-            }*/
-        }
     }
   
     private void instantiateExplosionEffect()
     {
-        GameObject obj = Instantiate(bazukaRocketExplosionEffect, transform.position, transform.rotation);
-        Destroy(obj, 1.5f);
-        isExplosed = true;
-        damageArea.SetActive(true);
+        GameObject obj = Instantiate(bazukaRocketExplosionPrefab, transform.position, transform.rotation);
+        obj.GetComponent<ExplosionController>().setDamage(damage);
+        obj.GetComponent<ExplosionController>().setPlayer(player);
         
-        Destroy(gameObject, 1.5f);
+        Destroy(obj, 1.5f);
+        
+        Destroy(gameObject);
     }
 }
