@@ -171,11 +171,11 @@ public class EnemyController : MonoBehaviour
             switch (enemyType)
             {
                 case EnemyType.RECRUIT:
-                    Debug.Log("RECRUIT attack");
+                    //Debug.Log("RECRUIT attack");
                     player.GetComponent<PlayerHealthController>().changeHealth(-damage);
                     break;
                 case EnemyType.ARCHER:
-                    Debug.Log("ARCHER attack");
+                    //Debug.Log("ARCHER attack");
                     ShootArrow(player);
                     break;
             }

@@ -21,11 +21,11 @@ public class DoorKeyItemController : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("DoorKeyItem");
+        //Debug.Log("DoorKeyItem");
         if (other.gameObject.tag == "Player")
         {
             audioSource.Play();
-            Debug.Log("Player received DoorKeyItem: " + doorKeyColor);
+            //Debug.Log("Player received DoorKeyItem: " + doorKeyColor);
             other.gameObject.GetComponent<DoorKeysContainer>().addDoorKey(doorKeyColor);
 
             //Destroy(gameObject);

@@ -39,10 +39,10 @@ public class DoorKeysContainer : MonoBehaviour
 
     public bool containsKey(DoorKeyColor key)
     {
-        foreach (var doorKeyColor in collectedKeys)
+        /*foreach (var doorKeyColor in collectedKeys)
         {
             Debug.Log("doorKeyColor: " + doorKeyColor);
-        }
+        }*/
         
         
         return collectedKeys.Contains(key);

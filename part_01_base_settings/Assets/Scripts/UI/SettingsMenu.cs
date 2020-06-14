@@ -22,25 +22,25 @@ public class SettingsMenu : MonoBehaviour
     
     public void setMasterVolume(float volume)
     {
-        Debug.Log("setMasterVolume " + volume);
+        //Debug.Log("setMasterVolume " + volume);
         audioMixer.SetFloat("masterVolume", volume);
     }
     
     public void setMusicVolume(float volume)
     {
-        Debug.Log("setMusicVolume " + volume);
+        //Debug.Log("setMusicVolume " + volume);
         audioMixer.SetFloat("musicVolume", volume);
     }
 
     public void setQuality(int qualityIndex)
     {
-        Debug.Log("setQuality " + qualityIndex);
+        //Debug.Log("setQuality " + qualityIndex);
         QualitySettings.SetQualityLevel(qualityIndex);
     }
 
     public void setFullScreen(bool isFullScreen)
     {
-        Debug.Log("setFullScreen " + isFullScreen);
+        //Debug.Log("setFullScreen " + isFullScreen);
         Screen.fullScreen = isFullScreen;
     }
 }

@@ -3,6 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum WeaponType
+{
+    AUTOMAT,
+    AK74,
+    PISTOLET,
+    VINTOVKA,
+    SHOTGUN,
+    BAZUKA
+}
+public enum BulletType
+{
+    BAZUKA_ROCKET,
+    BULLET
+}
 public class NewGunController : MonoBehaviour
 {
     public WeaponType weaponType;
@@ -70,7 +84,7 @@ public class NewGunController : MonoBehaviour
             {
                 if (playerController.ammoController.currentAmmo > 0)
                 {
-                    Debug.Log("Reload...");
+                    //Debug.Log("Reload...");
                     nextTimeToFire = Time.time + timeForMagazinReload;
                     StartCoroutine(Reload());
                 }
@@ -113,7 +127,7 @@ public class NewGunController : MonoBehaviour
     IEnumerator Reload()
     {
         isReloading = true;
-        Debug.Log("Reloading Ammo ... start");
+        //Debug.Log("Reloading Ammo ... start");
         audioSource.clip = ammoReloadSound;
         audioSource.Play();
 
@@ -122,7 +136,7 @@ public class NewGunController : MonoBehaviour
 
         yield return new WaitForSeconds(timeForMagazinReload);
 
-        Debug.Log("Reloading Ammo ... finish");
+        //Debug.Log("Reloading Ammo ... finish");
         isReloading = false;
     }
 

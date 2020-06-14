@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
 
     // COMPONENTS
     private CharacterController characterController;
-    public GunController gunController;
     public NewGunController newGunController;
     public ChangeWeaponContoller changeWeaponController;
     public GameObject respawnPoint;
@@ -163,19 +162,6 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("pointToLook" + pointToLook);
             //Debug.DrawLine(ray.origin, pointToLook, Color.red);
             transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
-        }
-    }
-
-    private void playerAttackControls()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            gunController.startShooting(true);
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            gunController.startShooting(false);
         }
     }
 

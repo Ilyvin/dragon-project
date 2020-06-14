@@ -33,8 +33,8 @@ public class GunTakeController : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             audioSource.Play();
-            Debug.Log("Player's ammo was extended: " + ammoValue + " items");
-            Debug.Log("Player got new weapon");
+            //Debug.Log("Player's ammo was extended: " + ammoValue + " items");
+            //Debug.Log("Player got new weapon");
             other.gameObject.GetComponent<PlayerAmmoController>().changeAmmo(ammoValue);
             other.gameObject.GetComponent<PlayerController>().newGunController.fillMagazinIfEmpty();
             other.gameObject.GetComponent<PlayerController>().changeWeaponController.addNewWeapon(gunPrefab);

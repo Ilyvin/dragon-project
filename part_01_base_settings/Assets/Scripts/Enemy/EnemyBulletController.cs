@@ -25,7 +25,7 @@ public class EnemyBulletController : MonoBehaviour
     void Start()
     {
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-        Debug.Log("[Bullet Controller] game Controller: " + gameController);
+        //Debug.Log("[Bullet Controller] game Controller: " + gameController);
         Destroy(gameObject, lifetime);
     }
 

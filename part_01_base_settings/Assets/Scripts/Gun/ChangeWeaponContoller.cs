@@ -20,7 +20,7 @@ public class ChangeWeaponContoller : MonoBehaviour
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
-            Debug.Log("Input.Mouse ScrollWheel > 0f, selectedWeapon=" + selectedWeapon);
+            //Debug.Log("Input.Mouse ScrollWheel > 0f, selectedWeapon=" + selectedWeapon);
             if (selectedWeapon >= transform.childCount - 1)
             {
                 selectedWeapon = 0;
@@ -33,7 +33,7 @@ public class ChangeWeaponContoller : MonoBehaviour
 
         if (Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
-            Debug.Log("Input.Mouse ScrollWheel < 0f, selectedWeapon=" + selectedWeapon);
+            //Debug.Log("Input.Mouse ScrollWheel < 0f, selectedWeapon=" + selectedWeapon);
             if (selectedWeapon <= 0)
             {
                 selectedWeapon = transform.childCount - 1;
@@ -72,7 +72,7 @@ public class ChangeWeaponContoller : MonoBehaviour
 
     private void SelectWeapon()
     {
-        Debug.Log("SelectWeapon()");
+        //Debug.Log("SelectWeapon()");
         int i = 0;
         foreach (Transform weapon in transform)
         {
@@ -99,16 +99,16 @@ public class ChangeWeaponContoller : MonoBehaviour
 
     public void addNewWeapon(GameObject weaponPrefab)
     {
-        Debug.Log("addNewWeapon");
+        //Debug.Log("addNewWeapon");
         
         if (weaponPrefab != null && weaponPrefab.gameObject.GetComponent<NewGunController>() != null)
         {
             String wt = weaponPrefab.gameObject.GetComponent<NewGunController>().weaponType.ToString();
 
-            foreach (String elem in weaponTypes)
+            /*foreach (String elem in weaponTypes)
             {
                 Debug.Log("elem = " + elem);
-            }
+            }*/
             
             if (!weaponTypes.Contains(wt))
             {
@@ -120,94 +120,4 @@ public class ChangeWeaponContoller : MonoBehaviour
             }
         }
     }
-
-    /*public PlayerController playerController;
-    public WeaponType activeWeaponType = WeaponType.VINTOVKA;
-    public Dictionary<WeaponType, GunActivator> weaponDictionary;
-    //public GunController actualGunController;
-    public GunActivator actualGunActivator;
-    public Queue<WeaponType> weaponQueue;
-    
-    public void initWeaponList()
-    {
-        weaponDictionary = new Dictionary<WeaponType, GunActivator>();
-        weaponQueue = new Queue<WeaponType>();
-        
-        Debug.Log("[ChangeWeaponContoller] initWeaponList()");
-        
-        GunActivator[] weaponArray = playerController.gameObject.GetComponentsInChildren<GunActivator>();
-
-        for (int i = 0; i < weaponArray.Length; i++)
-        {
-            weaponDictionary.Add(weaponArray[i].weaponType, weaponArray[i]);
-            weaponArray[i].activateWeapon(false);
-            Debug.Log("[ChangeWeaponContoller] weaponList: [" + i + "].weaponType = " + weaponArray[i].weaponType);
-            Debug.Log("[ChangeWeaponContoller] weaponList: [" + i + "] = " + weaponArray[i]);
-            
-            weaponQueue.Enqueue(weaponArray[i].weaponType);
-        }
-
-        getInitialGun();
-        
-        //if (weaponDictionary.ContainsKey(activeWeaponType))
-        //{
-        //    GunActivator currentWeapon = weaponDictionary[activeWeaponType];
-        //    Debug.Log("[ChangeWeaponContoller] currentWeapon != null :" + currentWeapon);
-        //    currentWeapon.activateWeapon(true);
-        //    actualGunActivator = currentWeapon;
-        //}
-        //else
-        //{
-        //    Debug.Log("[ChangeWeaponContoller] currentWeapon == null");
-        //}
-    }
-
-    public GunController getActualGunController()
-    {
-        Debug.Log("[ChangeWeaponContoller] getActualGunController()");
-        return actualGunActivator.gunController;
-    }
-    
-    public void getInitialGun()
-    {
-        Debug.Log("[ChangeWeaponContoller] getNextGun");
-        WeaponType firstWeaponType = weaponQueue.Dequeue();
-           
-        if (weaponDictionary.ContainsKey(firstWeaponType))
-        {
-            Debug.Log("[ChangeWeaponContoller] weaponDictionary.ContainsKey = " + firstWeaponType);
-            GunActivator currentWeapon = weaponDictionary[firstWeaponType];
-            currentWeapon.activateWeapon(true);
-            actualGunActivator = currentWeapon;
-        }
-        
-        weaponQueue.Enqueue(firstWeaponType);
-    }
-
-    public void getNextGun()
-    {
-        Debug.Log("***********getNextGun");
-        
-        WeaponType[] types = weaponQueue.ToArray();
-        foreach (WeaponType type in types)
-        {
-            Debug.Log("[ChangeWeaponContoller] weaponQueue: " + type.ToString());
-        }
-
-        
-        Debug.Log("[ChangeWeaponContoller] getNextGun");
-        WeaponType firstWeaponType = weaponQueue.Dequeue();
-           
-        if (weaponDictionary.ContainsKey(firstWeaponType))
-        {
-            actualGunActivator.activateWeapon(false);
-            Debug.Log("[ChangeWeaponContoller] weaponDictionary.ContainsKey = " + firstWeaponType);
-            GunActivator currentWeapon = weaponDictionary[firstWeaponType];
-            currentWeapon.activateWeapon(true);
-            actualGunActivator = currentWeapon;
-        }
-        
-        
-        weaponQueue.Enqueue(firstWeaponType);
-    }*/
 }

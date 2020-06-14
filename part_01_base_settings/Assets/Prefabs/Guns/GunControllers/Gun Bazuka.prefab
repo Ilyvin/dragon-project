@@ -363,7 +363,7 @@ MonoBehaviour:
   playerController: {fileID: 0}
   bulletPrefab: {fileID: 4638892586823411223, guid: 5722fa4ac8d899d44b7188797a1e26d6,
     type: 3}
-  bulletSpeed: 25
+  bulletSpeed: 5
   timeBetweenShots: 1
   isArmorPiercing: 0
   enemiesPiercingLimit: 1

@@ -19,7 +19,7 @@ public class BochkaController : MonoBehaviour
     public AudioClip destroySound;
 
     public GameObject bochkaExplosionEffect;
-    private bool bochaIsDestroyed = false;
+    private bool isExplosed = false;
     
     private PlayerController player;
     
@@ -56,7 +56,7 @@ public class BochkaController : MonoBehaviour
         audioSource.clip = destroySound;
         audioSource.Play();
 
-        bochaIsDestroyed = true;
+        isExplosed = true;
         
         instantiateExplosionEffect();
 
@@ -77,7 +77,7 @@ public class BochkaController : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if (bochaIsDestroyed)
+        if (isExplosed)
         {
             if (other.gameObject.tag == "Enemy")
             {
