@@ -86,7 +86,7 @@ public class PlayerHealthController : MonoBehaviour
 
     public void activateBronik(bool flag)
     {
-        Debug.Log("activateBronik...");
+        //Debug.Log("activateBronik...");
         
         if (flag)
         {
@@ -96,8 +96,8 @@ public class PlayerHealthController : MonoBehaviour
         {
             currentBronik = 0;
         }
-        Debug.Log("currentBronik = " + currentBronik);
-        Debug.Log("maxBronik = " + maxBronik);
+        //Debug.Log("currentBronik = " + currentBronik);
+        //Debug.Log("maxBronik = " + maxBronik);
         
         bronikIsActive = flag;
         playerController.playerStats.setBronikValue(currentBronik);

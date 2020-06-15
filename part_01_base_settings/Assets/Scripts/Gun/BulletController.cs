@@ -65,13 +65,13 @@ public class BulletController : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        Debug.Log("Bullet met collision: " + other);
+        //Debug.Log("Bullet met collision: " + other);
 
 
         //Debug.Log("BULLET is NOT exposed!");
         if (other.gameObject.tag == "Enemy")
         {
-            Debug.Log("Bullet met Enemy: " + other);
+            //Debug.Log("Bullet met Enemy: " + other);
             other.gameObject.GetComponent<EnemyHealthController>().changeHealth(-damage, player);
             //щас сделано так, что пуля летит сквозь всех врагов, не останавливаясь.
             //этот эффект надо будет потом использовать для того, чтобы типо того это был мега-скилл бронебойного выстрела.
@@ -130,10 +130,7 @@ public class BulletController : MonoBehaviour
                 {
                     instantiateExplosionEffect();
                 }
-                else
-                {
-                    Destroy(gameObject);
-                }
+                Destroy(gameObject);
             } //подсчёт, когда остановить бронебойную пулю (enemiesPiercingLimit - число врагов, убитых подряд)
             else if (enemiesPiercingCounter >= enemiesPiercingLimit)
             {
@@ -151,14 +148,11 @@ public class BulletController : MonoBehaviour
             {
                 instantiateExplosionEffect();
             }
-            else
-            {
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
         else if (other.gameObject.tag == "Wall")
         {
-            Debug.Log("Bullet met Wall");
+            //Debug.Log("Bullet met Wall");
             GameObject bulletHole = Instantiate(bulletWallHolePrefab,
                 transform.position - transform.forward * bulletHolePositionOffset, transform.rotation);
             bulletHole.transform.parent = other.transform;
@@ -167,14 +161,11 @@ public class BulletController : MonoBehaviour
             {
                 instantiateExplosionEffect();
             }
-            else
-            {
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
         else if (other.gameObject.tag == "Bochka")
         {
-            Debug.Log("Bullet met Bochka");
+            //Debug.Log("Bullet met Bochka");
             BochkaController bochkaController = other.gameObject.GetComponent<BochkaController>();
             bochkaController.changeHealth(-damage, player);
 
@@ -182,10 +173,7 @@ public class BulletController : MonoBehaviour
             {
                 instantiateExplosionEffect();
             }
-            else
-            {
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
     }
 
@@ -197,6 +185,6 @@ public class BulletController : MonoBehaviour
 
         Destroy(obj, 1.5f);
 
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 }

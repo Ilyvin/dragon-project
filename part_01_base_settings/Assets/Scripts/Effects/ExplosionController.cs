@@ -45,18 +45,22 @@ public class ExplosionController : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")
         {
-            Debug.Log("Explosion has been activated and met Enemy: " + other);
+            //Debug.Log("Explosion has been activated and met Enemy: " + other);
             other.gameObject.GetComponent<EnemyHealthController>().changeHealth(-damage, player);
+        }
+        else if (other.gameObject.tag == "EnemyRespawnBase")
+        {
+            //Debug.Log("Explosion has been activated and met Enemy: " + other);
+            other.gameObject.GetComponent<EnemyRespawnHealthController>().changeHealth(-damage, player);
         }
         else if (other.gameObject.tag == "Bochka")
         {
-            Debug.Log("Bochka has been destroyed and met other Bochka: " + other);
-            BochkaController bochkaController = other.gameObject.GetComponent<BochkaController>();
-            bochkaController.changeHealth(-damage, player);
+            //Debug.Log("Bochka has been destroyed and met other Bochka: " + other);
+            other.gameObject.GetComponent<BochkaController>().changeHealth(-damage, player);
         }
         else if (other.gameObject.tag == "Player")
         {
-            Debug.Log("Explosion has been activated and met Player: " + other);
+            //Debug.Log("Explosion has been activated and met Player: " + other);
             other.gameObject.GetComponent<PlayerHealthController>().changeHealth(-damage);
         }
     }
