@@ -116,9 +116,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 188ed766b3478fe4580d8d6512e9968d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 250
+  maxHealth: 100
   expaValue: 25
   currentHealth: 0
+  enemyBloodPuddlePrefab: {fileID: 4445853726062538220, guid: fb511ad0514f6ac49bda27e4efafdb4c,
+    type: 3}
 --- !u!114 &2079459246503076561
 MonoBehaviour:
   m_ObjectHideFlags: 0

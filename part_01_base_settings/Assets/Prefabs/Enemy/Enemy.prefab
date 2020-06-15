@@ -78,6 +78,8 @@ GameObject:
   - component: {fileID: 1054560290038290220}
   - component: {fileID: 7607493934809829882}
   - component: {fileID: 6514488187716565222}
+  - component: {fileID: 1851331128}
+  - component: {fileID: 560903047}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Enemy
@@ -120,6 +122,9 @@ MonoBehaviour:
   oneAttackTime: 1.5
   damage: 5
   enemyType: 0
+  enemyBulletPrefab: {fileID: 0}
+  firePoint: {fileID: 0}
+  bulletSpeed: 10
   aliveModel: {fileID: 5355590128000557887}
   deadModel: {fileID: 1119603725}
   stepsSoundsArray:
@@ -178,6 +183,8 @@ MonoBehaviour:
   maxHealth: 100
   expaValue: 10
   currentHealth: 0
+  enemyBloodPuddlePrefab: {fileID: 4445853726062538220, guid: fb511ad0514f6ac49bda27e4efafdb4c,
+    type: 3}
 --- !u!114 &1054560290038290220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,6 +309,34 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!136 &1851331128
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867234655409182399}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.16
+  m_Height: 4.21
+  m_Direction: 1
+  m_Center: {x: 0, y: 2.69, z: 0}
+--- !u!136 &560903047
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867234655409182399}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.16
+  m_Height: 4.21
+  m_Direction: 1
+  m_Center: {x: 0, y: 2.69, z: 0}
 --- !u!1 &2052909575838801927
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,6 +618,9 @@ MonoBehaviour:
   oneAttackTime: 3
   damage: 5
   enemyType: 0
+  enemyBulletPrefab: {fileID: 0}
+  firePoint: {fileID: 0}
+  bulletSpeed: 10
   aliveModel: {fileID: 0}
   deadModel: {fileID: 0}
   stepsSoundsArray: []
@@ -611,6 +649,7 @@ MonoBehaviour:
   maxHealth: 100
   expaValue: 10
   currentHealth: 0
+  enemyBloodPuddlePrefab: {fileID: 0}
 --- !u!1 &5355590128000557887
 GameObject:
   m_ObjectHideFlags: 0
