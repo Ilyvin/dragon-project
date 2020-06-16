@@ -62,7 +62,7 @@ public class NewGunController : MonoBehaviour
     public float speedDeviationRandomRange = 0.1f;
     public int shotgunBulletNumber = 10;
 
-    void Start()
+    void Awake()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         audioSource = gameObject.GetComponent<AudioSource>();
