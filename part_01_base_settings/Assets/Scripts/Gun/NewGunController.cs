@@ -10,7 +10,8 @@ public enum WeaponType
     PISTOLET,
     VINTOVKA,
     SHOTGUN,
-    BAZUKA
+    BAZUKA,
+    MACHINEGUN
 }
 public enum BulletType
 {

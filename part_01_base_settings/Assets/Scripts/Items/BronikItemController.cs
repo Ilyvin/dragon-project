@@ -16,13 +16,13 @@ public class BronikItemController : MonoBehaviour
     private void hideItemObject()
     {
         childModel.SetActive(false);
-        gameObject.GetComponent<BoxCollider>().enabled = false;
+        gameObject.GetComponent<Collider>().enabled = false;
     }
     
     private void showItemObject()
     {
         childModel.SetActive(true);
-        gameObject.GetComponent<BoxCollider>().enabled = true;
+        gameObject.GetComponent<Collider>().enabled = true;
     }
     
     private void OnTriggerEnter(Collider other)
